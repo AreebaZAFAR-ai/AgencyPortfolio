@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useRef } from "react";
@@ -29,18 +30,10 @@ export function HomeHero({ content, video }: HomeHeroProps) {
   });
 
   // Subtle video zoom while scrolling
-  const mediaScale = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [1, 1.1]
-  );
+  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
   // Move hero content slightly downward during scroll
-  const copyY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, 90]
-  );
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, 90]);
 
   // Fade hero content while leaving the video visible
   const copyOpacity = useTransform(
@@ -67,7 +60,6 @@ export function HomeHero({ content, video }: HomeHeroProps) {
               }
         }
         className="absolute inset-x-0 -top-20 h-[calc(100%+5rem)] w-full object-cover"
-        poster={video.poster}
         autoPlay={!reduceMotion}
         muted
         playsInline
@@ -75,10 +67,7 @@ export function HomeHero({ content, video }: HomeHeroProps) {
         preload="auto"
         aria-hidden="true"
       >
-        <source
-          src={video.src}
-          type="video/mp4"
-        />
+        <source src={video.src} type="video/mp4" />
       </motion.video>
 
       {/* =====================================================
@@ -144,18 +133,9 @@ export function HomeHero({ content, video }: HomeHeroProps) {
               delay: reduceMotion ? 0 : 0.25,
             }}
           >
-            <h1
-              className="
-                font-heading
-                text-hero
-                text-white
-              "
-            >
+            <h1 className="font-heading text-hero text-white">
               {content.heading.map((line, index) => (
-                <span
-                  key={index}
-                  className="block"
-                >
+                <span key={index} className="block">
                   {line}
                 </span>
               ))}
@@ -202,8 +182,7 @@ export function HomeHero({ content, video }: HomeHeroProps) {
               CTA BUTTONS
               ================================================= */}
 
-          {(content.primaryCta ||
-            content.secondaryCta) && (
+          {(content.primaryCta || content.secondaryCta) && (
             <motion.div
               initial={
                 reduceMotion

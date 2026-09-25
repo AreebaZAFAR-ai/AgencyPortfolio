@@ -21,22 +21,31 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
       className="
         fixed
         inset-0
-        z-[100]
+        z-[9999]
         flex
+        min-h-[100dvh]
+        w-full
         flex-col
-        bg-ah-bg/75
-        backdrop-blur-xl
+        overflow-hidden
+        bg-bg-contrast-dark
+        opacity-100
         md:hidden
       "
+      style={{
+        backgroundColor: "var(--bg-contrast-dark)",
+        opacity: 1,
+      }}
     >
       {/* Top bar */}
       <div
         className="
           flex
+          shrink-0
           items-center
           justify-between
           border-b
           border-white/10
+          bg-bg-contrast-dark
           px-6
           py-5
         "
@@ -60,7 +69,6 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
             border-white/20
             bg-white/5
             text-white
-            backdrop-blur-md
             transition-all
             hover:border-white/40
             hover:bg-white/10
@@ -71,7 +79,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex flex-1 flex-col justify-center gap-2 px-6">
+      <nav className="flex flex-1 flex-col justify-center gap-2 bg-bg-contrast-dark px-6">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
 
@@ -100,7 +108,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
       </nav>
 
       {/* CTA */}
-      <div className="px-6 pb-10">
+      <div className="shrink-0 bg-bg-contrast-dark px-6 pb-10">
         <Button
           href="/contact"
           size="lg"

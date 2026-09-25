@@ -13,7 +13,7 @@ interface CtaBannerProps {
 }
 
 export function CtaBanner({
- 
+  eyebrow,
   title = "Let's build something worth talking about.",
   description = "Tell us about your product, timeline, and goals we'll follow up within one business day",
   ctaLabel = "Get in touch",
@@ -23,7 +23,7 @@ export function CtaBanner({
     <section className="border-t border-ah-muted/10 py-section-sm md:py-section">
       <Container>
         <ScrollReveal as="div" className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
-          <SectionTitle title={title} description={description} size="display" />
+          <SectionTitle eyebrow={eyebrow} title={title} description={description} size="display" />
           <MagneticButton className="shrink-0">
             <Button href={ctaHref} size="lg" icon={<ArrowUpRightIcon className="h-4 w-4" />}>
               {ctaLabel}

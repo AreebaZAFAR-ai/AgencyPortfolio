@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import {
   ArrowLeftIcon,
@@ -17,6 +17,8 @@ import {
 } from "framer-motion";
 
 import { ScrollReveal } from "@/components/animations";
+import { gsap } from "@/lib/gsap";
+import { prefersReducedMotion } from "@/lib/motion-prefs";
 import { Button } from "@/components/common/Button";
 import { PlaceholderMedia } from "@/components/common/PlaceholderMedia";
 import { visualThemeIcon } from "@/components/sections/visual-theme";
@@ -25,25 +27,28 @@ import type { Project } from "@/data/types";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const CARD_SCROLL_DURATION = 15;
+// Full-page screenshot walkthrough duration.
+const CARD_SCROLL_DURATION = 10;
+
+// Different full-page screenshots may need slightly
+// different travel distances depending on their height.
+const CARD_TRAVEL: Record<string, string> = {
+  modisch: "-78%",
+  fitlat: "-68%",
+  cakespot: "-82%",
+  solarlink: "-75%",
+};
+
+// Keep screenshots at the full card width.
+const CARD_WIDTH: Record<string, string> = {
+  modisch: "100%",
+  fitlat: "100%",
+  cakespot: "100%",
+  solarlink: "100%",
+};
 
 // Sites that refuse iframe embedding because of their own security headers.
 const NON_EMBEDDABLE_SLUGS = new Set(["solarlink"]);
-
-// Screenshot sizing for project walkthrough cards.
-const CARD_WIDTH: Record<string, string> = {
-  modisch: "106%",
-  fitlat: "100%",
-  cakespot: "165%",
-  solarlink: "190%",
-};
-
-const CARD_TRAVEL: Record<string, string> = {
-  modisch: "-11%",
-  fitlat: "-22%",
-  cakespot: "-11%",
-  solarlink: "-11%",
-};
 
 interface WorkShowcaseProps {
   projects: Project[];
@@ -54,6 +59,224 @@ interface WorkShowcaseProps {
    * renders cards as a continuously auto-scrolling row.
    */
   autoScroll?: boolean;
+}
+
+/**
+ * Scroll-scrubbed entrance for grid cards: each card glides up,
+ * un-tilts and scales into place in step with the (Lenis-smoothed)
+ * scroll position. Right-column cards travel further so the two
+ * columns settle at slightly different rates.
+ */
+function ScrollCard({
+  children,
+  index,
+}: {
+  children: ReactNode;
+  index: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || prefersReducedMotion()) return;
+
+    const offsetColumn = index % 2 === 1;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el,
+        {
+          y: offsetColumn ? 180 : 110,
+          scale: 0.9,
+          rotateX: 10,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          scale: 1,
+          rotateX: 0,
+          opacity: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top bottom",
+            end: offsetColumn ? "top 55%" : "top 65%",
+            scrub: 0.9,
+          },
+        }
+      );
+    }, el);
+
+    return () => ctx.revert();
+  }, [index]);
+
+  return (
+    <div
+      ref={ref}
+      className="origin-bottom will-change-transform transform-3d"
+    >
+      {children}
+    </div>
+  );
+}
+
+interface ProjectCardProps {
+  item: Project;
+  index: number;
+  itemKey: string;
+  autoScroll: boolean;
+  reduceMotion: boolean | null;
+  onOpen: (index: number) => void;
+}
+
+function ProjectCard({
+  item,
+  index,
+  itemKey,
+  autoScroll,
+  reduceMotion,
+  onOpen,
+}: ProjectCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const Icon = visualThemeIcon[item.visualTheme];
+
+  const card = (
+    <button
+      type="button"
+      onClick={() => onOpen(index)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
+      aria-label={`Open the ${item.name} project walkthrough`}
+      aria-haspopup="dialog"
+      data-cursor="hover"
+      className={cn(
+        "group block overflow-hidden rounded-xl border border-ah-border bg-ah-surface p-2 text-left transition-transform duration-500 hover:-translate-y-1",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ah-accent/60 focus-visible:ring-offset-4 focus-visible:ring-offset-ah-bg",
+        "md:p-2.5",
+        autoScroll
+          ? "w-[460px] shrink-0 sm:w-[400px] lg:w-[520px]"
+          : "w-full"
+      )}
+    >
+      {/* Project image / full-page walkthrough */}
+      <span className="relative block aspect-16/11 w-full overflow-hidden rounded-lg bg-ah-ink/4">
+        {item.image ? (
+          reduceMotion ? (
+            /*
+             * Reduced motion:
+             * static image, no scrolling walkthrough.
+             */
+            <img
+              src={item.image}
+              alt={`${item.name} website project`}
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover object-top"
+            />
+          ) : (
+            <>
+              {/* Background blur */}
+              <img
+                src={item.image}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                className="absolute inset-0 h-full w-full scale-110 object-cover object-top opacity-30 blur-lg"
+              />
+
+              {/*
+               * Full-page screenshot walkthrough.
+               *
+               * The walkthrough only plays while the card is
+               * hovered/focused, and the viewport (card) never
+               * changes size -- the screenshot pans inside it.
+               */}
+              <motion.div
+                initial={{ y: "0%" }}
+                animate={
+                  isHovered
+                    ? {
+                        y: [
+                          "0%",
+                          CARD_TRAVEL[item.slug] ?? "-70%",
+                          "0%",
+                        ],
+                        transition: {
+                          duration: CARD_SCROLL_DURATION,
+                          times: [0, 0.72, 1],
+                          ease: "easeInOut",
+                          repeat: Infinity,
+                          repeatDelay: 1.5,
+                        },
+                      }
+                    : {
+                        y: "0%",
+                        transition: {
+                          duration: 0.6,
+                          ease: EASE,
+                        },
+                      }
+                }
+                className="absolute top-0"
+                style={{
+                  left: "50%",
+                  x: "-50%",
+                  width:
+                    CARD_WIDTH[item.slug] ?? "100%",
+                }}
+              >
+                <img
+                  src={item.image}
+                  alt={`${item.name} full website walkthrough`}
+                  className="block h-auto w-full"
+                  loading="lazy"
+                />
+              </motion.div>
+            </>
+          )
+        ) : (
+          <PlaceholderMedia
+            aspect="video"
+            label={item.name}
+            icon={Icon}
+            reveal={false}
+            className="absolute inset-0 h-full w-full"
+          />
+        )}
+      </span>
+
+      {/* Card information */}
+      <span className="flex items-end justify-between gap-3 px-1.5 pb-2 pt-3.5 md:px-2 md:pb-2.5 md:pt-4">
+        <span>
+          <span className="block font-heading text-project-title text-ah-ink">
+            {item.name}
+          </span>
+
+          <span className="mt-0.5 block text-caption text-ah-muted">
+            {item.client}
+          </span>
+        </span>
+
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-ah-muted/30 text-ah-ink transition-colors duration-300 group-hover:border-ah-accent group-hover:bg-ah-accent group-hover:text-ah-ink">
+          <ArrowUpRightIcon
+            className="size-3.5"
+            aria-hidden="true"
+          />
+        </span>
+      </span>
+    </button>
+  );
+
+  if (autoScroll) {
+    return <div key={itemKey}>{card}</div>;
+  }
+
+  return (
+    <ScrollCard key={item.slug} index={index}>
+      {card}
+    </ScrollCard>
+  );
 }
 
 export function WorkShowcase({
@@ -69,6 +292,9 @@ export function WorkShowcase({
   const project =
     activeIndex === null ? null : projects[activeIndex];
 
+  /*
+   * Lock page scrolling while the project modal is open.
+   */
   useEffect(() => {
     if (activeIndex === null) return;
 
@@ -129,6 +355,9 @@ export function WorkShowcase({
     setWalkthroughKey((current) => current + 1);
   };
 
+  /*
+   * Homepage marquee duplicates the projects.
+   */
   const displayItems = autoScroll
     ? [...projects, ...projects]
     : projects;
@@ -138,140 +367,16 @@ export function WorkShowcase({
       ? i % projects.length
       : i;
 
-    const Icon = visualThemeIcon[item.visualTheme];
-
-    const card = (
-      <button
-        type="button"
-        onClick={() => openProject(index)}
-        aria-label={`Open the ${item.name} project walkthrough`}
-        aria-haspopup="dialog"
-        data-cursor="hover"
-        className={cn(
-          "group block overflow-hidden rounded-xl border border-ah-border bg-ah-surface p-2 text-left transition-transform duration-500 hover:-translate-y-1",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ah-accent/60 focus-visible:ring-offset-4 focus-visible:ring-offset-ah-bg",
-          "md:p-2.5",
-
-          autoScroll
-            ? "w-[460px] shrink-0 sm:w-[400px] lg:w-[520px]"
-            : "w-full"
-        )}
-      >
-        {/* Project image */}
-        <span className="relative block aspect-16/11 w-full overflow-hidden rounded-lg bg-ah-ink/4">
-          {item.image ? (
-            autoScroll ? (
-              <img
-                src={item.image}
-                alt={`${item.name} website project`}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover object-top"
-              />
-            ) : (
-              <>
-                {/* Background blur */}
-                <img
-                  src={item.image}
-                  alt=""
-                  aria-hidden="true"
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full scale-110 object-cover object-top opacity-30 blur-lg"
-                />
-
-                {/* Main screenshot */}
-                <motion.div
-                  initial="rest"
-                  whileInView={
-                    reduceMotion ? "rest" : "scroll"
-                  }
-                  viewport={{ amount: 0.35 }}
-                  variants={{
-                    rest: {
-                      y: "0%",
-                    },
-
-                    scroll: {
-                      y: [
-                        "0%",
-                        CARD_TRAVEL[item.slug] ?? "-11%",
-                        "0%",
-                      ],
-
-                      transition: {
-                        duration: CARD_SCROLL_DURATION,
-                        times: [0, 0.68, 1],
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatDelay: 1,
-                        delay: index * 0.12,
-                      },
-                    },
-                  }}
-                  className="absolute top-0"
-                  style={{
-                    left: "50%",
-                    x: "-50%",
-                    width:
-                      CARD_WIDTH[item.slug] ?? "100%",
-                  }}
-                >
-                  <img
-                    src={item.image}
-                    alt={`${item.name} website project`}
-                    className="block h-auto w-full"
-                    loading="lazy"
-                  />
-                </motion.div>
-              </>
-            )
-          ) : (
-            <PlaceholderMedia
-              aspect="video"
-              label={item.name}
-              icon={Icon}
-              reveal={false}
-              className="absolute inset-0 h-full w-full"
-            />
-          )}
-        </span>
-
-        {/* Card information */}
-        <span className="flex items-end justify-between gap-3 px-1.5 pb-2 pt-3.5 md:px-2 md:pb-2.5 md:pt-4">
-          <span>
-            <span className="block font-heading text-project-title text-ah-ink">
-              {item.name}
-            </span>
-
-            <span className="mt-0.5 block text-caption text-ah-muted">
-              {item.client}
-            </span>
-          </span>
-
-          <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-ah-muted/30 text-ah-ink transition-colors duration-300 group-hover:border-ah-accent group-hover:bg-ah-accent group-hover:text-ah-bg">
-            <ArrowUpRightIcon
-              className="size-3.5"
-              aria-hidden="true"
-            />
-          </span>
-        </span>
-      </button>
-    );
-
-    if (autoScroll) {
-      return (
-        <div key={`${item.slug}-${i}`}>
-          {card}
-        </div>
-      );
-    }
-
     return (
-      <ScrollReveal
-        key={item.slug}
-        delay={index * 0.06}
-      >
-        {card}
-      </ScrollReveal>
+      <ProjectCard
+        key={autoScroll ? `${item.slug}-${i}` : item.slug}
+        item={item}
+        index={index}
+        itemKey={`${item.slug}-${i}`}
+        autoScroll={autoScroll}
+        reduceMotion={reduceMotion}
+        onOpen={openProject}
+      />
     );
   });
 
@@ -294,12 +399,7 @@ export function WorkShowcase({
       ) : (
         <div
           className={cn(
-            /*
-             * Changed from 3 columns to 2 columns.
-             * This increases card width without changing
-             * the existing aspect ratio / height.
-             */
-            "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 md:gap-5",
+            "grid grid-cols-1 gap-4 perspective-[1400px] sm:grid-cols-2 lg:grid-cols-2 md:gap-5",
             className
           )}
         >

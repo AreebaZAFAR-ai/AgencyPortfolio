@@ -6,7 +6,7 @@ export const projects: Project[] = [
     order: 0,
     client: "Modisch",
     name: "MODISCH",
-    image: "/assets/images/projects/modish.jpeg",
+    image: "/assets/images/projects/modischfull.png",
     liveUrl: "https://modisch-orcin.vercel.app/",
     summary: "A premium fashion e-commerce platform rebuilt for editorial storytelling.",
     clientBlurb:
@@ -34,7 +34,7 @@ export const projects: Project[] = [
     order: 1,
     client: "Fitlat",
     name: "FITLAT",
-    image: "/assets/images/projects/fitlat.jpg",
+    image: "/assets/images/projects/fitlabfull.png",
     liveUrl: "https://fitlat.vercel.app/",
     summary: "A cross-platform fitness app connecting coaches with clients in real time.",
     clientBlurb:
@@ -62,7 +62,7 @@ export const projects: Project[] = [
     order: 2,
     client: "Solarlink",
     name: "SOLARLINK",
-    image: "/assets/images/projects/solarlink.png",
+    image: "/assets/images/projects/solarlinkfull.png",
     liveUrl: "https://solarlink.com.pk/",
     summary: "An AI-driven monitoring platform for distributed solar installations.",
     clientBlurb:
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     order: 3,
     client: "Cakespot",
     name: "CAKESPOT",
-    image: "/assets/images/projects/cakespot.png",
+    image: "/assets/images/projects/cakespotfull.png",
     liveUrl: "https://cakespot-redesign.vercel.app/",
     summary: "A local-first marketplace and growth engine for independent bakeries.",
     clientBlurb:

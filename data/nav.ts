@@ -3,8 +3,9 @@ import type { NavItem } from "./types";
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
-  { label: "Work", href: "/work" },
+  { label: "Projects", href: "/work" },
   { label: "About Us", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const siteInfo = {

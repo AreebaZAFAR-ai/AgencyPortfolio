@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/hero/PageHero";
-import { StoryTimeline } from "@/components/sections/about/StoryTimeline";
-import { ValuesDeck } from "@/components/sections/about/ValuesDeck";
-import { CtaBanner } from "@/components/common/CtaBanner";
+import { AboutIntro } from "@/components/sections/about/AboutIntro";
+import { CeoSection } from "@/components/sections/about/CeoSection";
+import { TeamSection } from "@/components/sections/about/TeamSection";
 
 export const metadata: Metadata = {
   title: "About — AH Growth",
@@ -19,17 +19,14 @@ export default function AboutPage() {
         primaryCta={{ label: "Start a Project", href: "/contact" }}
         secondaryCta={{ label: "View Our Work", href: "/work" }}
         backgroundImage={{
-          src: "/assets/images/hero/h9.jpg",
+          src: "/assets/images/about/about-us.png",
           alt: "Overhead view of a team collaborating with laptops and charts",
         }}
         minHeightClass="min-h-[85dvh]"
       />
-      <StoryTimeline />
-      <ValuesDeck />
-      <CtaBanner
-        title="Bring us the challenge. We'll help shape the path."
-        description="Whether the starting point is an idea, an existing product, or a digital experience that needs to work better, we can help define and build what comes next."
-      />
+      <AboutIntro />
+      <CeoSection />
+      <TeamSection />
     </>
   );
 }

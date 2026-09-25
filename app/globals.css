@@ -5,33 +5,35 @@
 @custom-variant dark (&:is(.dark *));
 
 /* =========================================================
-   AH GROWTH — EDITORIAL / DARK BLUE DESIGN SYSTEM
+   AH GROWTH — EDITORIAL / LIGHT OLIVE DESIGN SYSTEM
    ========================================================= */
 
 @theme {
   /* =======================================================
      CORE BRAND PALETTE
+     Legacy `ah-*` utilities mapped onto the light sage/olive
+     tokens defined in :root below.
      ======================================================= */
 
-  --color-ah-bg: #040f16;
-  --color-ah-ink: #f6f7eb;
+  --color-ah-bg: #F6F7F4;
+  --color-ah-ink: #161C14;
 
-  --color-ah-accent: #f6f7eb;
-  --color-ah-accent-soft: #a8dc32;
+  --color-ah-accent: #97A87A;
+  --color-ah-accent-soft: #4F5B2A;
 
-  --color-ah-violet: #f6f7eb;
+  --color-ah-violet: #4F5B2A;
 
-  --color-ah-muted: #f6f7eb;
-  --color-ah-muted-dark: #f6f7eb;
+  --color-ah-muted: #4B5547;
+  --color-ah-muted-dark: #6B7766;
 
   /* =======================================================
      SURFACES
      ======================================================= */
 
-  --color-ah-surface: #bcaa99;
-  --color-ah-surface-light: #eeeeee;
+  --color-ah-surface: #ECEFE9;
+  --color-ah-surface-light: #FFFFFF;
 
-  --color-ah-border: rgb(246 247 235 / 15%);
+  --color-ah-border: #DDE3D8;
 
   /* =======================================================
      TYPE SCALE -- single source of truth for every text
@@ -143,6 +145,33 @@
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   /* =======================================================
+     GLOBAL PALETTE UTILITIES
+     e.g. bg-bg-main, text-text-secondary, bg-brand-primary,
+     border-border-subtle, shadow-card
+     ======================================================= */
+
+  --color-bg-main: var(--bg-main);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-alt: var(--bg-alt);
+  --color-bg-contrast-dark: var(--bg-contrast-dark);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverted: var(--text-inverted);
+
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-hover: var(--brand-primary-hover);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-secondary-hover: var(--brand-secondary-hover);
+  --color-brand-amber: var(--brand-amber);
+  --color-brand-amber-soft: var(--brand-amber-soft);
+
+  --color-border-subtle: var(--border-subtle);
+
+  --shadow-card: var(--shadow-card);
+
+  /* =======================================================
      SHADCN COLOR MAPPING
      ======================================================= */
 
@@ -215,99 +244,83 @@
 
 :root {
   /* =======================================================
-     MAIN
+     GLOBAL PALETTE
      ======================================================= */
 
-  --background: #040f16;
-  --foreground: #f6f7eb;
+  /* Layout Backgrounds */
+  --bg-main: #F6F7F4;
+  --bg-surface: #FFFFFF;
+  --bg-alt: #ECEFE9;
+  --bg-contrast-dark: #1C241B;
+
+  /* Typography */
+  --text-primary: #161C14;
+  --text-secondary: #4B5547;
+  --text-muted: #6B7766;
+  --text-inverted: #F6F7F4;
+
+  /* Accents & Brand Actions */
+  --brand-primary: #97A87A;
+  --brand-primary-hover: #86986A;
+  --brand-secondary: #4F5B2A;
+  --brand-secondary-hover: #414B22;
+  --brand-amber: #D48B38;
+  --brand-amber-soft: #FCEFD9;
+
+  /* Structural Borders & Shadows */
+  --border-subtle: #DDE3D8;
+  --shadow-card: 0 6px 24px -4px rgba(22, 28, 20, 0.05);
 
   /* =======================================================
-     CARDS / SURFACES
+     SHADCN TOKENS (derived from the palette above)
      ======================================================= */
 
-  --card: #bcaa99;
-  --card-foreground: #040f16;
+  --background: var(--bg-main);
+  --foreground: var(--text-primary);
 
-  /* =======================================================
-     POPOVERS
-     ======================================================= */
+  --card: var(--bg-surface);
+  --card-foreground: var(--text-primary);
 
-  --popover: #bcaa99;
-  --popover-foreground: #040f16;
+  --popover: var(--bg-surface);
+  --popover-foreground: var(--text-primary);
 
-  /* =======================================================
-     PRIMARY
-     ======================================================= */
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--text-primary);
 
-  --primary: #f6f7eb;
-  --primary-foreground: #040f16;
+  --secondary: var(--brand-secondary);
+  --secondary-foreground: var(--text-inverted);
 
-  /* =======================================================
-     SECONDARY
-     ======================================================= */
+  --muted: var(--bg-alt);
+  --muted-foreground: var(--text-muted);
 
-  --secondary: #bcaa99;
-  --secondary-foreground: #040f16;
-
-  /* =======================================================
-     MUTED
-     ======================================================= */
-
-  --muted: #bcaa99;
-  --muted-foreground: #f6f7eb;
-
-  /* =======================================================
-     ACCENT
-     ======================================================= */
-
-  --accent: #f6f7eb;
-  --accent-foreground: #040f16;
-
-  /* =======================================================
-     DESTRUCTIVE
-     ======================================================= */
+  --accent: var(--brand-amber-soft);
+  --accent-foreground: var(--text-primary);
 
   --destructive: oklch(0.577 0.245 27.325);
 
-  /* =======================================================
-     BORDERS / INPUTS
-     ======================================================= */
+  --border: var(--border-subtle);
+  --input: var(--border-subtle);
+  --ring: var(--brand-secondary);
 
-  --border: rgb(246 247 235 / 15%);
-  --input: rgb(246 247 235 / 20%);
-  --ring: #f6f7eb;
-
-  /* =======================================================
-     CHARTS
-     ======================================================= */
-
-  --chart-1: #f6f7eb;
-  --chart-2: #bcaa99;
-  --chart-3: #a8dc32;
-  --chart-4: #6f858f;
-  --chart-5: #777777;
-
-  /* =======================================================
-     RADIUS
-     ======================================================= */
+  --chart-1: var(--brand-primary);
+  --chart-2: var(--brand-secondary);
+  --chart-3: var(--brand-amber);
+  --chart-4: var(--text-muted);
+  --chart-5: var(--border-subtle);
 
   --radius: 0.5rem;
 
-  /* =======================================================
-     SIDEBAR
-     ======================================================= */
+  --sidebar: var(--bg-surface);
+  --sidebar-foreground: var(--text-primary);
 
-  --sidebar: #040f16;
-  --sidebar-foreground: #f6f7eb;
+  --sidebar-primary: var(--brand-primary);
+  --sidebar-primary-foreground: var(--text-primary);
 
-  --sidebar-primary: #f6f7eb;
-  --sidebar-primary-foreground: #040f16;
+  --sidebar-accent: var(--bg-alt);
+  --sidebar-accent-foreground: var(--text-primary);
 
-  --sidebar-accent: #bcaa99;
-  --sidebar-accent-foreground: #040f16;
-
-  --sidebar-border: rgb(246 247 235 / 15%);
-  --sidebar-ring: #f6f7eb;
+  --sidebar-border: var(--border-subtle);
+  --sidebar-ring: var(--brand-secondary);
 }
 
 /* =========================================================
@@ -320,15 +333,15 @@
   }
 
   html {
-    background: #040f16;
-    color-scheme: dark;
+    background: var(--bg-main);
+    color-scheme: light;
   }
 
   body {
     @apply bg-ah-bg text-ah-ink font-body antialiased;
 
-    background-color: #040f16;
-    color: #f6f7eb;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
   }
 
   /* =======================================================
@@ -347,8 +360,8 @@
      ======================================================= */
 
   ::selection {
-    background: #f6f7eb;
-    color: #040f16;
+    background: var(--brand-amber-soft);
+    color: var(--text-primary);
   }
 
   /* =======================================================
@@ -360,16 +373,16 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #040f16;
+    background: var(--bg-alt);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #bcaa99;
+    background: var(--text-muted);
     border-radius: 999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #f6f7eb;
+    background: var(--brand-secondary);
   }
 
   /* =======================================================

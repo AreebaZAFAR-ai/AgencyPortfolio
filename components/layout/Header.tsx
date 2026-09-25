@@ -32,7 +32,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-transparent bg-transparent">
+    <header className="sticky top-0 z-40 w-full border-b border-transparent bg-ah-bg">
       <Container>
         <div ref={navRef} className="flex h-20 items-center justify-between">
           <Link href="/" data-stagger data-cursor="hover" className="font-heading text-h3 text-ah-ink">

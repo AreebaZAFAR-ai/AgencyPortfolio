@@ -7,6 +7,7 @@ export const leadership: TeamMember[] = [
     initials: "AH",
     skills: ["Product Strategy", "Engineering", "Growth"],
     bio: "Ahsan founded AH Growth to close the gap between agencies that design well and agencies that build well. He leads product strategy and technical direction on every engagement.",
+    quote: "Building meaningful digital products isn't only about technology. It's about understanding people, solving real problems, and creating work that lasts.",
   },
   {
     name: "Sana Malik",
@@ -29,10 +30,10 @@ export const teamMembers: TeamMember[] = [
 ];
 
 export const cultureValues = [
-  { title: "Innovation", description: "We build for where the industry is going, not where it's been." },
-  { title: "Quality", description: "Every detail is reviewed as if it were the only thing we shipped this year." },
-  { title: "Transparency", description: "Clients see the work in progress, not just the finished reveal." },
-  { title: "Growth", description: "For clients and for our own team — standing still isn't an option." },
+  { title: "Our CEO", description: "Ahsan Haroon, Founder & CEO, leads AH Growth's product strategy and technical direction — closing the gap between agencies that design well and agencies that build well." },
+  { title: "HR Department", description: "Our HR team hires, supports, and grows the people behind the work — building a culture where talent is valued and every team member can do their best work." },
+  { title: "Professional Team", description: "Designers, engineers, AI specialists, and growth experts working as one team — every engagement is staffed by senior people who ship, not just plan." },
+  { title: "Management Department", description: "Management keeps every project on schedule and every client in the loop — from kickoff and planning through delivery and launch." },
 ];
 
 export const companyTimeline = [

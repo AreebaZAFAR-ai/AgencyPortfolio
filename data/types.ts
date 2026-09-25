@@ -85,6 +85,12 @@ export interface TeamMember {
   initials: string;
   skills: string[];
   bio?: string;
+
+  // Profile photo (omit to fall back to the initials placeholder)
+  image?: string;
+
+  // Personal message shown in the About page's CEO section
+  quote?: string;
 }
 
 export interface Testimonial {
@@ -140,4 +146,31 @@ export interface HeroContent {
   description: string;
   primaryCta?: HeroCta;
   secondaryCta?: HeroCta;
+}
+
+export interface ServiceProcessStepDetail {
+  number: string;
+  title: string;
+  description: string;
+  // Short deliverables/activities rendered as supporting metadata
+  meta: string[];
+  image: {
+    src: string;
+    alt: string;
+  };
+}
+
+// Detail-page-only content for a service, keyed by the same slug as Service.
+// Kept separate from Service so the /services listing data stays untouched.
+export interface ServiceDetail {
+  slug: string;
+
+  // WordHero vw font size / max-width override for long service names
+  heroFontSize?: number;
+  heroMaxWidthClass?: string;
+
+  process: ServiceProcessStepDetail[];
+
+  // Tools & technologies shown in the Technical Strip
+  stack: string[];
 }

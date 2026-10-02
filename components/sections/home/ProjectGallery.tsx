@@ -28,7 +28,7 @@ export function ProjectGallery() {
         </div>
       </Container>
 
-      <WorkShowcase projects={cards} flip />
+      <WorkShowcase projects={cards} autoScroll />
     </section>
   );
 }

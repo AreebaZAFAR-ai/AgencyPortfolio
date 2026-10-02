@@ -10,8 +10,8 @@ import { AboutCounter } from "./AboutCounter";
 export function EditorialAbout() {
   return (
     <div>
-      {/* ---------- Hero: black panel, portrait straddles the seam ---------- */}
-      <section className="relative bg-background pt-section text-text-primary">
+      {/* ---------- Hero: black panel with portrait ---------- */}
+      <section className="relative bg-background pt-section pb-section text-text-primary">
         <Container>
           <StaggerReveal className="flex flex-col items-center gap-(--space-lg) text-center">
             <h1 className="font-display text-hero uppercase">About Us</h1>
@@ -19,9 +19,9 @@ export function EditorialAbout() {
           </StaggerReveal>
         </Container>
 
-        {/* Spacer pushes the portrait so half of it hangs over the surface section */}
+        {/* Spacer between the heading and the portrait */}
         <div className="h-(--space-3xl)" />
-        <div className="relative z-10 mx-auto -mb-40 w-[min(78vw,380px)] md:-mb-56">
+        <div className="relative z-10 mx-auto w-[min(88vw,520px)] rounded-2xl bg-surface p-3 md:p-4">
           <ImageReveal className="relative aspect-4/5 w-full overflow-hidden rounded-xl">
             <Parallax speed={0.05} className="absolute inset-x-0 -top-[4%] -bottom-[10%]">
               <Image
@@ -29,7 +29,7 @@ export function EditorialAbout() {
                 alt="The AH Growth studio"
                 fill
                 priority
-                sizes="380px"
+                sizes="(max-width: 640px) 88vw, 520px"
                 className="object-cover grayscale-[35%]"
               />
             </Parallax>
@@ -38,7 +38,7 @@ export function EditorialAbout() {
       </section>
 
       {/* ---------- Story: surface panel ---------- */}
-      <section className="bg-surface pt-72 pb-section text-text-primary md:pt-96">
+      <section className="bg-surface pt-section pb-section text-text-primary">
         <Container size="narrow">
           <StaggerReveal className="flex flex-col items-center gap-(--space-xl) text-center">
             <span className="type-eyebrow text-text-muted">Digital growth shouldn&rsquo;t feel like guesswork</span>

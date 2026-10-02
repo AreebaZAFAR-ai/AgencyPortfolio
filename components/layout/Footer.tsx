@@ -68,14 +68,14 @@ export function Footer() {
           </div>
 
           {/* Link groups */}
-          <div className="grid grid-cols-2 gap-x-8 gap-y-12 text-center sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-12 text-left sm:grid-cols-3">
             {footerGroups.map((group) => (
-              <div key={group.title}>
+              <div key={group.title} className={group.title === "Connect" ? "col-span-2 sm:col-span-1" : undefined}>
                 <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.16em] text-text-muted">
                   {group.title}
                 </p>
 
-                <ul className="flex flex-col items-center gap-3">
+                <ul className="flex flex-col items-start gap-3">
                   {group.items.map((item) => (
                     <li key={item.label}>
                       {item.href.startsWith("/") ? (
@@ -85,7 +85,7 @@ export function Footer() {
                       ) : (
                         <a
                           href={item.href}
-                          className={`${linkClass} break-all`}
+                          className={`${linkClass} whitespace-nowrap`}
                           {...(item.href.startsWith("http")
                             ? {
                                 target: "_blank",

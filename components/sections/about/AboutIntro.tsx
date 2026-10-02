@@ -6,17 +6,17 @@ import { ImageReveal, Parallax, StaggerReveal } from "@/components/animations";
 
 export function AboutIntro() {
   return (
-    <section className="py-section-sm md:py-section">
+    <section className="py-section">
       <Container>
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
           <StaggerReveal className="flex flex-col items-start gap-6 md:gap-8">
-            <span className="type-eyebrow text-ah-muted">Who we are</span>
+            <span className="type-eyebrow text-text-muted">Who we are</span>
 
-            <h2 className="max-w-xl font-heading text-display text-ah-ink">
+            <h2 className="max-w-xl font-display text-h1 text-text-primary">
               AH GROWTH
             </h2>
 
-            <p className="max-w-lg text-body-lg text-ah-muted">
+            <p className="max-w-lg text-body-lg text-text-secondary">
               AH Growth is a digital product and technology partner. We work
               with businesses that have something worth building, and help
               them turn it into products that are useful, scalable, and

@@ -14,5 +14,6 @@ export const heroContent: HeroContent = {
 // decodes, without adding a duplicate asset.
 export const heroVideo: HeroVideo = {
   src: "/assets/videos/ahgrowthhero.mp4",
+  mobileSrc: "/assets/videos/ahgrowthhero-mobile.mp4",
   poster: "/assets/images/hero/main_hero.jpg",
 };

@@ -12,20 +12,20 @@ export function TechList({
   title = "Technology.",
 }: TechListProps) {
   return (
-    <section className="border-t border-ah-muted/10 py-section-sm md:py-section">
+    <section className="border-t border-border-subtle py-section">
       <Container>
         <SectionTitle
           eyebrow="Technology"
           title={title}
-          size="h1"
-          className="mb-10"
+          size="h3"
+          className="mb-(--space-2xl)"
         />
 
-        <ScrollReveal as="div" className="flex flex-wrap gap-3">
+        <ScrollReveal as="div" className="flex flex-wrap gap-(--space-sm)">
           {technologies.map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-ah-muted/25 px-4 py-2 text-sm text-ah-muted"
+              className="rounded-full border border-border-subtle px-(--space-md) py-(--space-xs) text-small text-text-secondary"
             >
               {tech}
             </span>

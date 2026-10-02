@@ -130,13 +130,13 @@ export function CapabilitiesShowcase({ capabilities }: CapabilitiesShowcaseProps
   }, [reduceMotion, capabilities]);
 
   return (
-    <section ref={sectionRef} className="relative border-t border-ah-muted/10">
-      <Container className="py-section-sm md:py-section">
-        <SectionTitle eyebrow="What We Build" title="Built for the way your business works." size="display" />
+    <section ref={sectionRef} className="relative border-t border-border-subtle">
+      <Container className="py-section">
+        <SectionTitle eyebrow="What We Build" title="Built for the way your business works." size="h2" />
       </Container>
 
       {reduceMotion ? (
-        <Container className="pb-section-sm md:pb-section">
+        <Container className="pb-section ">
           <CapabilityList capabilities={capabilities} />
         </Container>
       ) : (
@@ -153,23 +153,23 @@ export function CapabilitiesShowcase({ capabilities }: CapabilitiesShowcaseProps
                     }}
                     className={cn("absolute inset-x-0", index === 0 ? "opacity-100" : "opacity-0")}
                   >
-                    <span className="font-heading text-hero text-ah-muted/30">
+                    <span className="font-display text-hero text-surface">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="mt-4 max-w-3xl font-heading text-display text-ah-ink">{capability.title}</h3>
-                    <p className="mt-6 max-w-lg text-body-lg text-ah-muted">{capability.description}</p>
+                    <h3 className="mt-4 max-w-3xl font-display text-h1 text-text-primary">{capability.title}</h3>
+                    <p className="mt-6 max-w-lg text-body-lg text-text-secondary">{capability.description}</p>
                   </div>
                 ))}
               </Container>
 
-              <div className="type-eyebrow absolute bottom-10 right-6 text-ah-muted md:right-10 xl:right-16">
+              <div className="type-eyebrow absolute bottom-10 right-6 text-text-secondary md:right-10 xl:right-16">
                 {String(activeIndex + 1).padStart(2, "0")} / {String(capabilities.length).padStart(2, "0")}
               </div>
             </div>
           </div>
 
           {/* Mobile: no pin, plain scroll */}
-          <Container className="pb-section-sm md:hidden">
+          <Container className="pb-section md:hidden">
             <CapabilityList capabilities={capabilities} />
           </Container>
         </>
@@ -186,14 +186,14 @@ function CapabilityList({ capabilities }: { capabilities: Capability[] }) {
           key={capability.title}
           as="div"
           delay={index * 0.06}
-          className="flex flex-col gap-2 border-t border-ah-muted/10 py-8 md:flex-row md:items-baseline md:gap-10"
+          className="flex flex-col gap-2 border-t border-border-subtle py-8 md:flex-row md:items-baseline md:gap-10"
         >
-          <span className="font-heading text-h2 text-ah-muted md:w-20">
+          <span className="font-display text-h3 text-text-secondary md:w-20">
             {String(index + 1).padStart(2, "0")}
           </span>
           <div>
-            <h3 className="font-heading text-section-md text-ah-ink">{capability.title}</h3>
-            <p className="mt-2 max-w-lg text-body-lg text-ah-muted">{capability.description}</p>
+            <h3 className="font-display text-h2 text-text-primary">{capability.title}</h3>
+            <p className="mt-2 max-w-lg text-body-lg text-text-secondary">{capability.description}</p>
           </div>
         </ScrollReveal>
       ))}

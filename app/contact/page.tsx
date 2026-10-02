@@ -10,18 +10,25 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="w-full bg-ah-bg">
+    <div className="w-full">
       {/* Hero */}
-      <WordHero title="Contact Us" />
+      <WordHero
+        title="Contact Us"
+        image={{
+          src: "/assets/images/contact/contact-hero-cottonbro.jpg",
+          alt: "Empty office desks with computers and chairs",
+          titleAlign: "center",
+        }}
+      />
 
       {/* Contact Form */}
-      <section className="px-5 pb-32 pt-16 md:px-8 md:pb-40 md:pt-24">
+      <section className="py-section">
         <Container>
           <div className="mx-auto w-full max-w-5xl">
             <ContactForm />
           </div>
         </Container>
       </section>
-    </main>
+    </div>
   );
 }

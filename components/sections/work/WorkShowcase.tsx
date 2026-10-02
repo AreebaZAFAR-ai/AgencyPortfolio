@@ -13,6 +13,7 @@ import {
 import {
   AnimatePresence,
   motion,
+  useInView,
   useReducedMotion,
 } from "framer-motion";
 
@@ -23,6 +24,8 @@ import { Button } from "@/components/common/Button";
 import { PlaceholderMedia } from "@/components/common/PlaceholderMedia";
 import { visualThemeIcon } from "@/components/sections/visual-theme";
 import { cn } from "@/lib/utils";
+import { useArrowMarquee } from "@/lib/use-arrow-marquee";
+import { MarqueeArrows } from "@/components/common/MarqueeArrows";
 import type { Project } from "@/data/types";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -37,6 +40,9 @@ const CARD_TRAVEL: Record<string, string> = {
   fitlat: "-68%",
   cakespot: "-82%",
   solarlink: "-75%",
+  noctra: "-88%",
+  orelle: "-88%",
+  "aesthetic-clinic": "-86%",
 };
 
 // Keep screenshots at the full card width.
@@ -59,7 +65,16 @@ interface WorkShowcaseProps {
    * renders cards as a continuously auto-scrolling row.
    */
   autoScroll?: boolean;
+
+  /**
+   * Homepage variant:
+   * pins one project on screen and flips to the next as the page scrolls.
+   */
+  flip?: boolean;
 }
+
+// Matches the sticky Header's h-20 -- the flip stage pins directly beneath it.
+const HEADER_OFFSET = 80;
 
 /**
  * Scroll-scrubbed entrance for grid cards: each card glides up,
@@ -120,11 +135,31 @@ function ScrollCard({
   );
 }
 
+/**
+ * True on devices that can't hover (phones, tablets). Defaults to
+ * false so the server render matches desktop behaviour.
+ */
+function useNoHover() {
+  const [noHover, setNoHover] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(hover: none)");
+    const update = () => setNoHover(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  return noHover;
+}
+
 interface ProjectCardProps {
   item: Project;
   index: number;
   itemKey: string;
-  autoScroll: boolean;
+  layout: "grid" | "marquee" | "flip";
+  /** Flip layout: whether this card is the one currently facing the viewer. */
+  active?: boolean;
   reduceMotion: boolean | null;
   onOpen: (index: number) => void;
 }
@@ -133,15 +168,26 @@ function ProjectCard({
   item,
   index,
   itemKey,
-  autoScroll,
+  layout,
+  active,
   reduceMotion,
   onOpen,
 }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const Icon = visualThemeIcon[item.visualTheme];
 
+  // Touch devices never fire hover, so play the walkthrough
+  // while the card is mostly on screen instead.
+  const cardRef = useRef<HTMLButtonElement>(null);
+  const noHover = useNoHover();
+  const inView = useInView(cardRef, { amount: 0.6 });
+  // In the flip stack every card overlaps the viewport, so only the
+  // card facing the viewer counts as "in view".
+  const isPlaying = isHovered || (noHover && (active ?? inView));
+
   const card = (
     <button
+      ref={cardRef}
       type="button"
       onClick={() => onOpen(index)}
       onMouseEnter={() => setIsHovered(true)}
@@ -150,18 +196,20 @@ function ProjectCard({
       onBlur={() => setIsHovered(false)}
       aria-label={`Open the ${item.name} project walkthrough`}
       aria-haspopup="dialog"
+      aria-hidden={active === false || undefined}
+      tabIndex={active === false ? -1 : undefined}
       data-cursor="hover"
       className={cn(
-        "group block overflow-hidden rounded-xl border border-ah-border bg-ah-surface p-2 text-left transition-transform duration-500 hover:-translate-y-1",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ah-accent/60 focus-visible:ring-offset-4 focus-visible:ring-offset-ah-bg",
+        "group block overflow-hidden rounded-xl border border-surface bg-surface p-(--space-xs) text-left transition-transform duration-500 hover:-translate-y-1",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-secondary focus-visible:ring-offset-4 focus-visible:ring-offset-background",
         "md:p-2.5",
-        autoScroll
-          ? "w-[460px] shrink-0 sm:w-[400px] lg:w-[520px]"
+        layout === "marquee"
+          ? "w-[80vw] shrink-0 sm:w-[400px] lg:w-[520px]"
           : "w-full"
       )}
     >
       {/* Project image / full-page walkthrough */}
-      <span className="relative block aspect-16/11 w-full overflow-hidden rounded-lg bg-ah-ink/4">
+      <span className={cn("relative block w-full overflow-hidden rounded-lg bg-surface", layout === "flip" ? "aspect-video" : "aspect-16/11")}>
         {item.image ? (
           reduceMotion ? (
             /*
@@ -188,14 +236,14 @@ function ProjectCard({
               {/*
                * Full-page screenshot walkthrough.
                *
-               * The walkthrough only plays while the card is
-               * hovered/focused, and the viewport (card) never
+               * The walkthrough plays while the card is hovered/focused
+               * (or in view on touch devices), and the viewport (card) never
                * changes size -- the screenshot pans inside it.
                */}
               <motion.div
                 initial={{ y: "0%" }}
                 animate={
-                  isHovered
+                  isPlaying
                     ? {
                         y: [
                           "0%",
@@ -247,18 +295,18 @@ function ProjectCard({
       </span>
 
       {/* Card information */}
-      <span className="flex items-end justify-between gap-3 px-1.5 pb-2 pt-3.5 md:px-2 md:pb-2.5 md:pt-4">
+      <span className="flex items-end justify-between gap-(--space-sm) px-1.5 pb-(--space-xs) pt-3.5 md:px-(--space-xs) md:pb-2.5 md:pt-(--space-md)">
         <span>
-          <span className="block font-heading text-project-title text-ah-ink">
+          <span className="block font-display text-body-lg text-text-primary">
             {item.name}
           </span>
 
-          <span className="mt-0.5 block text-caption text-ah-muted">
+          <span className="mt-0.5 block text-small text-text-secondary">
             {item.client}
           </span>
         </span>
 
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-ah-muted/30 text-ah-ink transition-colors duration-300 group-hover:border-ah-accent group-hover:bg-ah-accent group-hover:text-ah-ink">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-border-subtle text-text-primary transition-colors duration-300 group-hover:border-text-primary group-hover:bg-text-primary group-hover:text-background">
           <ArrowUpRightIcon
             className="size-3.5"
             aria-hidden="true"
@@ -268,8 +316,12 @@ function ProjectCard({
     </button>
   );
 
-  if (autoScroll) {
+  if (layout === "marquee") {
     return <div key={itemKey}>{card}</div>;
+  }
+
+  if (layout === "flip") {
+    return card;
   }
 
   return (
@@ -283,11 +335,19 @@ export function WorkShowcase({
   projects,
   className,
   autoScroll = false,
+  flip = false,
 }: WorkShowcaseProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [facingIndex, setFacingIndex] = useState(0);
+  const flipRef = useRef<HTMLDivElement>(null);
   const [walkthroughKey, setWalkthroughKey] = useState(0);
 
   const reduceMotion = useReducedMotion();
+  const {
+    trackRef: marqueeTrackRef,
+    scrollBy: scrollMarquee,
+    hoverHandlers: marqueeHoverHandlers,
+  } = useArrowMarquee(autoScroll ? projects.length : 0, 38, -1);
 
   const project =
     activeIndex === null ? null : projects[activeIndex];
@@ -337,6 +397,52 @@ export function WorkShowcase({
     };
   }, [activeIndex, projects.length]);
 
+  /*
+   * Flip layout: the tall wrapper supplies the scroll distance while the
+   * stage sticks under the header. Each step flips the current card away
+   * on its horizontal axis and the next one in from below, then holds.
+   */
+  const useFlip = flip && !reduceMotion;
+
+  useEffect(() => {
+    const root = flipRef.current;
+    if (!useFlip || !root) return;
+
+    const ctx = gsap.context(() => {
+      const els = gsap.utils.toArray<HTMLElement>("[data-flip-card]", root);
+      if (els.length < 2) return;
+
+      gsap.set(els.slice(1), { rotateX: 90, autoAlpha: 0 });
+
+      const tl = gsap.timeline({
+        defaults: { duration: 0.5 },
+        scrollTrigger: {
+          trigger: root,
+          start: `top ${HEADER_OFFSET}px`,
+          end: "bottom bottom",
+          scrub: 0.6,
+          onUpdate: (self) => {
+            const next = Math.min(els.length - 1, Math.floor(self.progress * (els.length - 1) + 0.5));
+            setFacingIndex((current) => (current === next ? current : next));
+          },
+        },
+      });
+
+      els.slice(0, -1).forEach((el, i) => {
+        tl.to({}, { duration: 0.35 })
+          .to(el, { rotateX: -90, autoAlpha: 0, scale: 0.92, ease: "power2.in" })
+          .fromTo(
+            els[i + 1],
+            { rotateX: 90, autoAlpha: 0, scale: 0.92 },
+            { rotateX: 0, autoAlpha: 1, scale: 1, ease: "power2.out" }
+          )
+          .to({}, { duration: 0.35 });
+      });
+    }, root);
+
+    return () => ctx.revert();
+  }, [useFlip, projects.length]);
+
   const openProject = (index: number) => {
     setActiveIndex(index);
     setWalkthroughKey((current) => current + 1);
@@ -362,6 +468,8 @@ export function WorkShowcase({
     ? [...projects, ...projects]
     : projects;
 
+  const layout = autoScroll ? "marquee" : useFlip ? "flip" : "grid";
+
   const cards = displayItems.map((item, i) => {
     const index = autoScroll
       ? i % projects.length
@@ -373,7 +481,8 @@ export function WorkShowcase({
         item={item}
         index={index}
         itemKey={`${item.slug}-${i}`}
-        autoScroll={autoScroll}
+        layout={layout}
+        active={layout === "flip" ? i === facingIndex : undefined}
         reduceMotion={reduceMotion}
         onOpen={openProject}
       />
@@ -383,7 +492,41 @@ export function WorkShowcase({
   return (
     <>
       {/* Work cards */}
-      {autoScroll ? (
+      {useFlip ? (
+        <div
+          ref={flipRef}
+          className={cn("relative", className)}
+          style={{ height: `${projects.length * 100}vh` }}
+        >
+          <div className="sticky top-(--header-height) flex h-[calc(100dvh-var(--header-height))] flex-col items-center justify-center gap-(--space-lg) px-(--space-gutter) perspective-[1600px]">
+            {/* Width follows the viewport height so the whole card always fits on screen. */}
+            <div
+              className="relative transform-3d"
+              style={{ width: "min(100%, 1280px, calc((100dvh - var(--header-height) - 9rem) * 16 / 9))" }}
+            >
+              {cards.map((card, i) => (
+                <div
+                  key={projects[i].slug}
+                  data-flip-card
+                  className={cn(
+                    "will-change-transform backface-hidden",
+                    i === 0 ? "relative" : "absolute inset-x-0 top-0",
+                    i !== facingIndex && "pointer-events-none"
+                  )}
+                >
+                  {card}
+                </div>
+              ))}
+            </div>
+
+            <p className="type-eyebrow tabular-nums text-text-muted" aria-live="polite">
+              <span className="text-text-primary">{String(facingIndex + 1).padStart(2, "0")}</span>
+              {" / "}
+              {String(projects.length).padStart(2, "0")}
+            </p>
+          </div>
+        </div>
+      ) : autoScroll ? (
         <ScrollReveal
           as="div"
           y={16}
@@ -392,14 +535,18 @@ export function WorkShowcase({
             className
           )}
         >
-          <div className="flex w-max animate-[marquee_38s_linear_infinite] items-center gap-4 motion-reduce:animate-none group-hover:[animation-play-state:paused] md:gap-5">
+          <div
+            ref={marqueeTrackRef}
+            {...marqueeHoverHandlers}
+            className="flex w-max items-center gap-(--space-md) will-change-transform md:gap-(--space-lg)">
             {cards}
           </div>
+          <MarqueeArrows onScroll={scrollMarquee} label="projects" className="mt-(--space-xl)" />
         </ScrollReveal>
       ) : (
         <div
           className={cn(
-            "grid grid-cols-1 gap-4 perspective-[1400px] sm:grid-cols-2 lg:grid-cols-2 md:gap-5",
+            "grid grid-cols-1 gap-(--space-md) perspective-[1400px] sm:grid-cols-2 lg:grid-cols-2 md:gap-(--space-lg)",
             className
           )}
         >
@@ -418,7 +565,9 @@ export function WorkShowcase({
               duration: reduceMotion ? 0 : 0.3,
             }}
             onClick={() => setActiveIndex(null)}
-            className="fixed inset-0 z-100 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm sm:p-8"
+            // Keep Lenis from scrolling the page behind the modal.
+            data-lenis-prevent
+            className="fixed inset-0 z-100 flex items-center justify-center bg-background/80 p-(--space-md) sm:p-(--space-xl)"
           >
             <motion.div
               role="dialog"
@@ -446,21 +595,21 @@ export function WorkShowcase({
                 duration: reduceMotion ? 0 : 0.5,
                 ease: EASE,
               }}
-              className="flex h-[82vh] max-h-[720px] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-ah-border bg-ah-surface text-ah-ink shadow-2xl"
+              className="flex h-[82vh] max-h-[720px] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border-subtle bg-surface text-text-primary shadow-2xl"
             >
               {/* Modal header */}
-              <div className="flex shrink-0 items-center justify-between gap-4 border-b border-ah-border px-4 py-3 md:px-6 md:py-4">
+              <div className="flex shrink-0 items-center justify-between gap-(--space-md) border-b border-border-subtle px-(--space-md) py-(--space-sm) md:px-(--space-lg) md:py-(--space-md)">
                 <div className="min-w-0">
-                  <p className="type-eyebrow text-ah-muted">
+                  <p className="type-eyebrow text-text-muted">
                     Project preview
                   </p>
 
-                  <div className="mt-1 flex items-baseline gap-3">
-                    <h3 className="truncate font-heading text-project-title text-ah-ink">
+                  <div className="mt-1 flex items-baseline gap-(--space-sm)">
+                    <h3 className="truncate font-display text-body-lg text-text-primary">
                       {project.name}
                     </h3>
 
-                    <p className="hidden text-caption text-ah-muted sm:block">
+                    <p className="hidden text-small text-text-secondary sm:block">
                       {project.client}
                     </p>
                   </div>
@@ -471,7 +620,7 @@ export function WorkShowcase({
                   onClick={() => setActiveIndex(null)}
                   aria-label="Close project walkthrough"
                   data-cursor="hover"
-                  className="flex size-10 shrink-0 items-center justify-center rounded-full border border-ah-muted/30 text-ah-ink transition-colors hover:border-ah-ink hover:bg-ah-ink hover:text-ah-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ah-accent"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-full border border-border-subtle text-text-primary transition-colors hover:border-text-primary hover:bg-text-primary hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-secondary"
                 >
                   <XIcon
                     className="size-5"
@@ -481,12 +630,12 @@ export function WorkShowcase({
               </div>
 
               {/* Browser bar */}
-              <div className="flex h-9 shrink-0 items-center gap-2 border-b border-ah-border px-4 md:h-10 md:px-5">
-                <span className="size-2.5 rounded-full bg-ah-muted/40" />
-                <span className="size-2.5 rounded-full bg-ah-violet" />
-                <span className="size-2.5 rounded-full bg-ah-accent" />
+              <div className="flex h-9 shrink-0 items-center gap-(--space-xs) border-b border-border-subtle px-(--space-md) md:h-10 md:px-(--space-lg)">
+                <span className="size-2.5 rounded-full bg-text-muted" />
+                <span className="size-2.5 rounded-full bg-text-muted" />
+                <span className="size-2.5 rounded-full bg-surface" />
 
-                <span className="ml-3 truncate rounded-full bg-ah-ink/6 px-4 py-1.5 text-caption text-ah-muted">
+                <span className="ml-(--space-sm) truncate rounded-full bg-surface px-(--space-md) py-1.5 text-small text-text-secondary">
                   {project.liveUrl
                     ? project.liveUrl.replace(
                         /^https?:\/\/+/,
@@ -497,7 +646,7 @@ export function WorkShowcase({
               </div>
 
               {/* Live preview */}
-              <div className="relative min-h-0 flex-1 overflow-hidden bg-ah-ink/4">
+              <div className="relative min-h-0 flex-1 overflow-hidden bg-surface">
                 {project.liveUrl &&
                 !NON_EMBEDDABLE_SLUGS.has(
                   project.slug
@@ -506,13 +655,13 @@ export function WorkShowcase({
                     key={`${project.slug}-${walkthroughKey}`}
                     src={project.liveUrl}
                     title={`${project.name} live preview`}
-                    className="absolute inset-0 h-full w-full border-0 bg-white"
+                    className="absolute inset-0 h-full w-full border-0 bg-surface"
                     sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
                     referrerPolicy="no-referrer"
                   />
                 ) : project.liveUrl ? (
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-8 text-center">
-                    <p className="max-w-sm text-body-sm text-ah-muted">
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-(--space-md) p-(--space-xl) text-center">
+                    <p className="max-w-sm text-small text-text-secondary">
                       {project.name} blocks in-page
                       embedding for security reasons. Open it
                       in a new tab to explore the live site.
@@ -548,14 +697,14 @@ export function WorkShowcase({
               </div>
 
               {/* Modal footer */}
-              <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-ah-border px-4 py-3 md:px-6 md:py-4">
-                <div className="flex items-center gap-2">
+              <div className="flex shrink-0 flex-wrap items-center justify-between gap-(--space-sm) border-t border-border-subtle px-(--space-md) py-(--space-sm) md:px-(--space-lg) md:py-(--space-md)">
+                <div className="flex items-center gap-(--space-xs)">
                   <button
                     type="button"
                     onClick={() => moveProject(-1)}
                     aria-label="Show previous project"
                     data-cursor="hover"
-                    className="flex size-9 items-center justify-center rounded-full border border-ah-muted/30 text-ah-ink transition-colors hover:border-ah-ink hover:bg-ah-ink hover:text-ah-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ah-accent"
+                    className="flex size-9 items-center justify-center rounded-full border border-border-subtle text-text-primary transition-colors hover:border-text-primary hover:bg-text-primary hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-secondary"
                   >
                     <ArrowLeftIcon
                       className="size-4"
@@ -568,7 +717,7 @@ export function WorkShowcase({
                     onClick={() => moveProject(1)}
                     aria-label="Show next project"
                     data-cursor="hover"
-                    className="flex size-9 items-center justify-center rounded-full border border-ah-muted/30 text-ah-ink transition-colors hover:border-ah-ink hover:bg-ah-ink hover:text-ah-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ah-accent"
+                    className="flex size-9 items-center justify-center rounded-full border border-border-subtle text-text-primary transition-colors hover:border-text-primary hover:bg-text-primary hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-secondary"
                   >
                     <ArrowRightIcon
                       className="size-4"
@@ -585,7 +734,7 @@ export function WorkShowcase({
                     }
                     aria-label="Reload preview"
                     data-cursor="hover"
-                    className="flex size-9 items-center justify-center rounded-full border border-ah-muted/30 text-ah-ink transition-colors hover:border-ah-ink hover:bg-ah-ink hover:text-ah-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ah-accent"
+                    className="flex size-9 items-center justify-center rounded-full border border-border-subtle text-text-primary transition-colors hover:border-text-primary hover:bg-text-primary hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-secondary"
                   >
                     <RotateCcwIcon
                       className="size-4"
@@ -593,7 +742,7 @@ export function WorkShowcase({
                     />
                   </button>
 
-                  <span className="ml-1 text-caption text-ah-muted">
+                  <span className="ml-1 text-small text-text-secondary">
                     {String(activeIndex + 1).padStart(
                       2,
                       "0"
@@ -606,7 +755,7 @@ export function WorkShowcase({
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-(--space-sm)">
                   <Button
                     href={`/work/${project.slug}`}
                     variant="outline"

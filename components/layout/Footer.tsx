@@ -1,100 +1,140 @@
 import Link from "next/link";
-import { ArrowUpRightIcon } from "lucide-react";
+import Image from "next/image";
 import { navItems, siteInfo } from "@/data/nav";
 import { services } from "@/data/services";
 import { Container } from "@/components/common/Container";
-import { Button } from "@/components/common/Button";
-import { ScrollReveal } from "@/components/animations";
 
 const footerGroups = [
   {
     title: "Pages",
-    items: navItems.map((item) => ({ label: item.label, href: item.href })),
+    items: navItems.map((item) => ({
+      label: item.label,
+      href: item.href,
+    })),
   },
   {
     title: "Services",
-    items: services.slice(0, 6).map((service) => ({ label: service.name, href: `/services/${service.slug}` })),
+    items: [
+      ...services.map((service) => ({
+        label: service.name,
+        href: `/services/${service.slug}`,
+      })),
+      // Not a separate page -- covered by the Digital Marketing service
+      { label: "Performance Marketing", href: "/services/digital-marketing" },
+      { label: "Other Services", href: "/services" },
+    ],
   },
   {
     title: "Connect",
     items: [
       { label: siteInfo.email, href: `mailto:${siteInfo.email}` },
-      ...siteInfo.social.map((social) => ({ label: social.label, href: social.href })),
+      ...siteInfo.social.map((social) => ({
+        label: social.label,
+        href: social.href,
+      })),
     ],
   },
 ] as const;
 
+const linkClass =
+  "text-[14px] text-text-secondary transition-all duration-300 hover:translate-x-1 hover:text-text-primary";
+
 export function Footer() {
   return (
-    <footer id="site-footer" className="px-3 pb-3 md:px-6 md:pb-6">
-      {/* <section className="relative overflow-hidden py-24 text-center md:py-36">
-        <Container size="narrow">
-          <ScrollReveal as="div" y={24}>
-            <h2 className="font-heading text-hero font-semibold text-balance text-ah-ink">
-              Let&apos;s build something that performs.
-            </h2>
-            <p className="mx-auto mt-7 max-w-lg text-balance text-base text-ah-muted">
-              Bring us the idea, the challenge, or the digital product that needs to work better.{" "}
-              {siteInfo.name} will help shape it, build it, and prepare it to grow.
-            </p>
-            <Button href="/services" size="lg" className="mt-8" icon={<ArrowUpRightIcon className="h-4 w-4" />}>
-              View Services
-            </Button>
-            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-ah-muted/70">
-              Websites · Applications · Automation · Growth
-            </p>
-          </ScrollReveal>
-        </Container>
-      </section> */}
+    <footer
+      id="site-footer"
+      className="overflow-hidden bg-surface text-text-primary"
+    >
+      <Container className="pt-[clamp(4rem,8vw,7rem)]">
+        <div className="grid gap-[clamp(3rem,7vw,6rem)] pb-[clamp(4rem,7vw,6rem)] lg:grid-cols-[1.1fr_2fr]">
+          {/* Brand */}
+          <div className="flex flex-col justify-between gap-10">
+            <div>
+              <Link
+                href="/"
+                className="font-display text-2xl font-medium tracking-[-0.03em]"
+              >
+                {siteInfo.name}
+              </Link>
 
-      <div className="mx-auto max-w-[1440px] rounded-3xl color-ah-bg px-6 py-12 md:px-12 md:py-16">
-        <div className="grid gap-12 border-b border-ah-border pb-12 lg:grid-cols-[1.1fr_1.9fr]">
-          <div>
-            <span className="font-heading text-h2 text-ah-ink">
-              {siteInfo.name}
-            </span>
-            <p className="mt-7 max-w-sm text-body-sm text-ah-muted">{siteInfo.tagline}</p>
+              <p className="mt-5 max-w-sm text-[15px] leading-[1.6] text-text-secondary">
+                {siteInfo.tagline}
+              </p>
+            </div>
+
+            <p className="text-[11px] uppercase tracking-[0.16em] text-text-muted">
+              Software &amp; digital agency
+            </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+          {/* Link groups */}
+          <div className="grid grid-cols-2 gap-x-8 gap-y-12 text-center sm:grid-cols-3">
             {footerGroups.map((group) => (
               <div key={group.title}>
-                <p className="type-eyebrow text-ah-muted">{group.title}</p>
-                <ul className="mt-5 space-y-3 text-body-sm text-ah-ink/72">
-                  {group.items.map((item) =>
-                    item.href.startsWith("/") ? (
-                      <li key={item.label}>
-                        <Link href={item.href} className="transition-colors hover:text-ah-ink">
+                <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.16em] text-text-muted">
+                  {group.title}
+                </p>
+
+                <ul className="flex flex-col items-center gap-3">
+                  {group.items.map((item) => (
+                    <li key={item.label}>
+                      {item.href.startsWith("/") ? (
+                        <Link href={item.href} className={linkClass}>
                           {item.label}
                         </Link>
-                      </li>
-                    ) : (
-                      <li key={item.label}>
+                      ) : (
                         <a
                           href={item.href}
+                          className={`${linkClass} break-all`}
                           {...(item.href.startsWith("http")
-                            ? { target: "_blank", rel: "noopener noreferrer" }
+                            ? {
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                              }
                             : {})}
-                          className="transition-colors hover:text-ah-ink"
                         >
                           {item.label}
                         </a>
-                      </li>
-                    )
-                  )}
+                      )}
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 pt-6 text-caption text-ah-muted/80 sm:flex-row sm:items-center sm:justify-between">
-          <span>
-            © {new Date().getFullYear()} {siteInfo.name}. All rights reserved.
-          </span>
-          <span>Software & digital agency</span>
+        {/* Centered brand */}
+        <div className="border-t border-border-subtle py-8 text-center">
+          <div className="relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-2xl sm:aspect-[21/9]">
+            <Image
+              src="/assets/images/footer-office.jpg"
+              alt="The AH Growth office workspace"
+              fill
+              sizes="(min-width: 1440px) 1440px, 100vw"
+              className="object-cover"
+              style={{ objectPosition: "center 60%" }}
+            />
+          </div>
+
+          <p
+            className="font-display text-[clamp(2.5rem,7vw,6rem)] font-medium uppercase leading-none tracking-[-0.06em]"
+          >
+            {siteInfo.name}
+          </p>
         </div>
-      </div>
+
+        {/* Bottom bar */}
+        <div className="flex flex-col items-center gap-3 border-t border-border-subtle py-6 text-center text-[11px] uppercase tracking-[0.1em] text-text-muted sm:flex-row sm:justify-between">
+          <span>
+            © {new Date().getFullYear()} {siteInfo.name}
+          </span>
+
+          <span>All rights reserved</span>
+
+          <span>Software &amp; digital agency</span>
+        </div>
+      </Container>
     </footer>
   );
 }

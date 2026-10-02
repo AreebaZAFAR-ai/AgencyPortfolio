@@ -77,7 +77,7 @@ export function CaseStudyBlock({
   }, [project.image]);
 
   return (
-    <section className="border-b border-ah-muted/10 py-section-sm md:py-section">
+    <section className="border-b border-border-subtle py-section">
       <Container>
         <div
           className={cn(
@@ -88,7 +88,7 @@ export function CaseStudyBlock({
           {/* Screenshot walkthrough */}
           <div
             ref={viewportRef}
-            className="relative aspect-video w-full overflow-hidden rounded-2xl bg-ah-ink/5"
+            className="relative aspect-video w-full overflow-hidden rounded-2xl bg-surface"
           >
             {project.image && (
               <>
@@ -164,45 +164,45 @@ export function CaseStudyBlock({
             as="div"
             className="flex flex-col gap-6"
           >
-            <span className="type-eyebrow text-ah-muted">
+            <span className="type-eyebrow text-text-muted">
               {project.client}
             </span>
 
-            <h3 className="font-heading text-h1 text-ah-ink">
+            <h3 className="font-display text-h2 text-text-primary">
               {project.name}
             </h3>
 
-            <p className="max-w-lg text-body text-ah-muted">
+            <p className="max-w-lg text-body text-text-secondary">
               {project.summary}
             </p>
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
               <div>
-                <span className="type-eyebrow text-ah-muted">
+                <span className="type-eyebrow text-text-muted">
                   Challenge
                 </span>
 
-                <p className="mt-1 text-body-sm text-ah-ink/85">
+                <p className="mt-1 text-small text-text-primary">
                   {project.challenge}
                 </p>
               </div>
 
               <div>
-                <span className="type-eyebrow text-ah-muted">
+                <span className="type-eyebrow text-text-muted">
                   Solution
                 </span>
 
-                <p className="mt-1 text-body-sm text-ah-ink/85">
+                <p className="mt-1 text-small text-text-primary">
                   {project.solution}
                 </p>
               </div>
 
               <div>
-                <span className="type-eyebrow text-ah-muted">
+                <span className="type-eyebrow text-text-muted">
                   Result
                 </span>
 
-                <p className="mt-1 text-body-sm text-ah-ink/85">
+                <p className="mt-1 text-small text-text-primary">
                   {project.results[0]?.label}:{" "}
                   {project.results[0]?.value}
                 </p>
@@ -212,7 +212,7 @@ export function CaseStudyBlock({
             <Link
               href={`/work/${project.slug}`}
               data-cursor="hover"
-              className="inline-flex w-fit items-center gap-2 text-button text-ah-ink transition-colors hover:text-ah-muted"
+              className="inline-flex w-fit items-center gap-2 text-small font-medium text-text-primary transition-colors hover:text-text-secondary"
             >
               View case study
 

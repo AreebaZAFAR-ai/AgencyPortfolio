@@ -15,10 +15,15 @@ export function ServiceDetailPage({ service, detail }: ServiceDetailPageProps) {
     <>
       <WordHero
         title={service.name.toUpperCase()}
-        fontSize={detail.heroFontSize ?? 6}
-        maxWidthClass={detail.heroMaxWidthClass ?? "max-w-4xl"}
+        image={{
+          src: detail.heroImage ?? "/assets/images/ffff.jpg",
+          alt: `${service.name} at AH Growth`,
+          position: detail.heroImagePosition,
+          fit: "contain",
+          titleAlign: "center",
+        }}
       />
-      <ServiceProcess steps={detail.process} />
+      <ServiceProcess steps={detail.process} imageFit={detail.imageFit} />
       <ServiceTechnicalStrip items={detail.stack} />
       <CtaBanner
         eyebrow="Have a project in mind?"

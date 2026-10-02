@@ -6,7 +6,7 @@ export const projects: Project[] = [
     order: 0,
     client: "Modisch",
     name: "MODISCH",
-    image: "/assets/images/projects/modischfull.png",
+    image: "/assets/images/projects/modischfull.jpg",
     liveUrl: "https://modisch-orcin.vercel.app/",
     summary: "A premium fashion e-commerce platform rebuilt for editorial storytelling.",
     clientBlurb:
@@ -34,7 +34,7 @@ export const projects: Project[] = [
     order: 1,
     client: "Fitlat",
     name: "FITLAT",
-    image: "/assets/images/projects/fitlabfull.png",
+    image: "/assets/images/projects/fitlabfull.jpg",
     liveUrl: "https://fitlat.vercel.app/",
     summary: "A cross-platform fitness app connecting coaches with clients in real time.",
     clientBlurb:
@@ -62,7 +62,7 @@ export const projects: Project[] = [
     order: 2,
     client: "Solarlink",
     name: "SOLARLINK",
-    image: "/assets/images/projects/solarlinkfull.png",
+    image: "/assets/images/projects/solarlinkfull.jpg",
     liveUrl: "https://solarlink.com.pk/",
     summary: "An AI-driven monitoring platform for distributed solar installations.",
     clientBlurb:
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     order: 3,
     client: "Cakespot",
     name: "CAKESPOT",
-    image: "/assets/images/projects/cakespotfull.png",
+    image: "/assets/images/projects/cakespotfull.jpg",
     liveUrl: "https://cakespot-redesign.vercel.app/",
     summary: "A local-first marketplace and growth engine for independent bakeries.",
     clientBlurb:
@@ -112,6 +112,90 @@ export const projects: Project[] = [
       { label: "Cost per acquisition", value: "-52%" },
     ],
     visualTheme: "analytics",
+  },
+  {
+    slug: "noctra",
+    order: 4,
+    client: "Noctra",
+    name: "NOCTRA",
+    image: "/assets/images/projects/noctrafull.jpg",
+    liveUrl: "https://noctra-cars.vercel.app/",
+    summary: "A cinematic showroom website for a curated performance and luxury car dealer.",
+    clientBlurb:
+      "Noctra sources, inspects and delivers performance and luxury cars — from Ferrari and Lamborghini to Porsche and BMW M — for drivers who care about the details.",
+    challenge:
+      "A luxury dealership has to feel as considered online as it does on the showroom floor. Generic dealer templates flattened every car into the same grid and gave buyers no reason to book a viewing.",
+    solution:
+      "We designed a dark, cinematic showroom experience with full-screen vehicle features, a curated inventory showcase, and clear paths to book a test drive or private viewing.",
+    designProcess: [
+      "Defined a dark, high-contrast visual language for the brand",
+      "Designed full-bleed feature sections for each highlighted vehicle",
+      "Built a curated inventory showcase with clear pricing",
+      "Added test-drive booking and contact flows throughout",
+    ],
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
+    results: [
+      { label: "Scope", value: "Design + Build" },
+      { label: "Experience", value: "Fully responsive" },
+      { label: "Status", value: "Live" },
+    ],
+    visualTheme: "brand",
+  },
+  {
+    slug: "orelle",
+    order: 5,
+    client: "Orelle",
+    name: "ORELLE",
+    image: "/assets/images/projects/orellefull.jpg",
+    liveUrl: "https://clothing-website-gamma-nine.vercel.app/",
+    summary: "An editorial fashion storefront for a slow-made clothing and accessories label.",
+    clientBlurb:
+      "Orelle makes clothing and accessories cut from mill-finished cloth and finished by hand in small runs, built around the idea of quiet form and lasting presence.",
+    challenge:
+      "Orelle's pieces rely on texture, proportion and restraint — qualities a standard product grid hides. The store needed to sell while still feeling like an editorial lookbook.",
+    solution:
+      "We built an editorial-first storefront with seasonal edits for women and men, scroll-driven product rows, quick-shop interactions, testimonials and a newsletter for capsule drops.",
+    designProcess: [
+      "Shaped a restrained, editorial typography and layout system",
+      "Designed seasonal Women's and Men's edit sections",
+      "Built scroll-driven product rows with quick-shop actions",
+      "Added capsule features, testimonials and a newsletter sign-up",
+    ],
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
+    results: [
+      { label: "Scope", value: "Design + Build" },
+      { label: "Experience", value: "Fully responsive" },
+      { label: "Status", value: "Live" },
+    ],
+    visualTheme: "design",
+  },
+  {
+    slug: "aesthetic-clinic",
+    order: 6,
+    client: "Skin Aesthetics",
+    name: "SKIN AESTHETICS",
+    image: "/assets/images/projects/aestheticfull.jpg",
+    liveUrl: "https://aesthetic-clinic-black.vercel.app/",
+    summary: "A calm, trust-first website for a doctor-led skin and aesthetics clinic.",
+    clientBlurb:
+      "Skin Aesthetics is a doctor-led clinic offering medical-grade facials, laser, pigmentation and acne care, anti-aging and injectable treatments.",
+    challenge:
+      "Aesthetic treatments are a high-trust decision. The clinic needed a site that explained a wide range of treatments clearly and made booking a consultation feel easy and reassuring.",
+    solution:
+      "We designed a warm, editorial site with a structured treatment directory, doctor profiles, before-and-after results, client reviews, an FAQ and consultation booking throughout.",
+    designProcess: [
+      "Organised eight treatment categories into a clear directory",
+      "Designed doctor-led trust sections and client review blocks",
+      "Built a results showcase and a frequently asked questions section",
+      "Placed consultation booking at every key decision point",
+    ],
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Lenis"],
+    results: [
+      { label: "Scope", value: "Design + Build" },
+      { label: "Experience", value: "Fully responsive" },
+      { label: "Status", value: "Live" },
+    ],
+    visualTheme: "growth",
   },
 ];
 

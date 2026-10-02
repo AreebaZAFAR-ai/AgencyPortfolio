@@ -109,14 +109,14 @@ export function ValuesFlip() {
   return (
     <section
       ref={sectionRef}
-      className="relative border-t border-ah-muted/10 py-section-sm md:py-section"
+      className="relative border-t border-border-subtle py-section"
     >
       <Container>
         <SectionTitle
           eyebrow="Our Structure"
           title="The teams that run AH Growth."
           description="Scroll to flip through the people and departments behind every engagement -- your scroll drives the flip, not a timer."
-          size="display"
+          size="h2"
           className="mb-14 md:mb-20"
         />
 
@@ -131,18 +131,18 @@ export function ValuesFlip() {
                 ref={(el) => {
                   cardRefs.current[index] = el;
                 }}
-                className="absolute inset-0 flex flex-col justify-between rounded-[28px] border border-ah-border bg-ah-ink p-10 [backface-visibility:hidden] lg:p-12"
+                className="absolute inset-0 flex flex-col justify-between rounded-[28px] border border-border-subtle bg-text-primary p-10 [backface-visibility:hidden] lg:p-12"
               >
-                <span className="type-eyebrow text-ah-bg/60">
+                <span className="type-eyebrow text-background">
                   {String(index + 1).padStart(2, "0")} /{" "}
                   {String(cultureValues.length).padStart(2, "0")}
                 </span>
 
                 <div>
-                  <h3 className="font-heading text-h1 text-ah-bg">
+                  <h3 className="font-display text-h2 text-background">
                     {value.title}
                   </h3>
-                  <p className="mt-4 max-w-md text-body-lg text-ah-bg/70">
+                  <p className="mt-4 max-w-md text-body-lg text-background">
                     {value.description}
                   </p>
                 </div>
@@ -158,8 +158,8 @@ export function ValuesFlip() {
                 className={cn(
                   "h-1.5 rounded-full transition-all duration-300",
                   index === activeIndex
-                    ? "w-8 bg-ah-ink"
-                    : "w-1.5 bg-ah-muted/30"
+                    ? "w-8 bg-text-primary"
+                    : "w-1.5 bg-text-muted"
                 )}
               />
             ))}
@@ -174,15 +174,15 @@ export function ValuesFlip() {
               as="div"
               delay={index * 0.08}
             >
-              <div className="flex flex-col gap-3 rounded-[24px] border border-ah-border bg-ah-ink p-8">
-                <span className="type-eyebrow text-ah-bg/60">
+              <div className="flex flex-col gap-3 rounded-[24px] border border-border-subtle bg-text-primary p-8">
+                <span className="type-eyebrow text-background">
                   {String(index + 1).padStart(2, "0")} /{" "}
                   {String(cultureValues.length).padStart(2, "0")}
                 </span>
-                <h3 className="font-heading text-h2 text-ah-bg">
+                <h3 className="font-display text-h3 text-background">
                   {value.title}
                 </h3>
-                <p className="text-body text-ah-bg/70">
+                <p className="text-body text-background">
                   {value.description}
                 </p>
               </div>

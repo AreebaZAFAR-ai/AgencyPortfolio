@@ -8,12 +8,12 @@ interface FeatureGridProps {
 
 export function FeatureGrid({ features }: FeatureGridProps) {
   return (
-    <section className="border-t border-ah-muted/10 bg-ah-surface py-section-sm md:py-section">
+    <section className="border-t border-border-subtle bg-surface py-section">
       <Container>
         <SectionTitle
           eyebrow="Features"
           title="What's included."
-          size="h1"
+          size="h3"
           className="mb-12"
         />
 
@@ -23,13 +23,13 @@ export function FeatureGrid({ features }: FeatureGridProps) {
               key={feature.title}
               as="div"
               delay={index * 0.06}
-              className="flex flex-col gap-2 border-b border-ah-muted/10 pb-8"
+              className="flex flex-col gap-2 border-b border-border-subtle pb-8"
             >
-              <h3 className="font-heading text-project-title text-ah-ink">
+              <h3 className="font-display text-body-lg text-text-primary">
                 {feature.title}
               </h3>
 
-              <p className="text-body-sm text-ah-muted">
+              <p className="text-small text-text-secondary">
                 {feature.description}
               </p>
             </ScrollReveal>

@@ -25,6 +25,11 @@ export interface Service {
 
   // Service image used on the Services page (omit to fall back to the icon placeholder)
   image?: string;
+  // Optional override for the home page services strip card (falls back to `image`)
+  cardImage?: string;
+
+  // "contain" shows the whole image inside the card instead of cropping it (default "cover")
+  imageFit?: "cover" | "contain";
 
   size?: "lg" | "md" | "sm";
 
@@ -137,6 +142,8 @@ export interface HeroImage {
 
 export interface HeroVideo {
   src: string;
+  // Smaller 720p version served to phones.
+  mobileSrc?: string;
   poster: string;
 }
 
@@ -169,7 +176,15 @@ export interface ServiceDetail {
   heroFontSize?: number;
   heroMaxWidthClass?: string;
 
+  // Full-bleed photo behind the detail page's hero title
+  heroImage?: string;
+  // CSS object-position for the hero photo, e.g. "center 30%" (default "center")
+  heroImagePosition?: string;
+
   process: ServiceProcessStepDetail[];
+
+  // "contain" shows each whole step image inside its card instead of cropping it (default "cover")
+  imageFit?: "cover" | "contain";
 
   // Tools & technologies shown in the Technical Strip
   stack: string[];

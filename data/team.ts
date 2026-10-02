@@ -2,19 +2,26 @@ import type { TeamMember } from "./types";
 
 export const leadership: TeamMember[] = [
   {
-    name: "Ahsan Haroon",
+    name: "Hassan",
     role: "Founder & CEO",
-    initials: "AH",
+    initials: "H",
     skills: ["Product Strategy", "Engineering", "Growth"],
-    bio: "Ahsan founded AH Growth to close the gap between agencies that design well and agencies that build well. He leads product strategy and technical direction on every engagement.",
+    bio: "Hassan founded AH Growth to close the gap between agencies that design well and agencies that build well, and leads product strategy and technical direction on every engagement.",
     quote: "Building meaningful digital products isn't only about technology. It's about understanding people, solving real problems, and creating work that lasts.",
   },
   {
-    name: "Sana Malik",
-    role: "Studio Manager",
-    initials: "SM",
+    name: "Abdullah Ahmad",
+    role: "Management",
+    initials: "AA",
     skills: ["Delivery", "Client Partnership", "Operations"],
-    bio: "Sana runs the studio's day-to-day delivery, keeping every engagement on schedule and every client in the loop from kickoff to launch.",
+    bio: "Keeps every engagement on schedule and every client in the loop, from kickoff to launch.",
+  },
+  {
+    name: "Nameer",
+    role: "Management",
+    initials: "N",
+    skills: ["Planning", "Operations", "Client Success"],
+    bio: "Turns plans into momentum, coordinating teams so projects move smoothly and ship on time.",
   },
 ];
 
@@ -30,7 +37,7 @@ export const teamMembers: TeamMember[] = [
 ];
 
 export const cultureValues = [
-  { title: "Our CEO", description: "Ahsan Haroon, Founder & CEO, leads AH Growth's product strategy and technical direction — closing the gap between agencies that design well and agencies that build well." },
+  { title: "Our CEO", description: "Hassan, Founder & CEO, leads AH Growth's product strategy and technical direction — closing the gap between agencies that design well and agencies that build well." },
   { title: "HR Department", description: "Our HR team hires, supports, and grows the people behind the work — building a culture where talent is valued and every team member can do their best work." },
   { title: "Professional Team", description: "Designers, engineers, AI specialists, and growth experts working as one team — every engagement is staffed by senior people who ship, not just plan." },
   { title: "Management Department", description: "Management keeps every project on schedule and every client in the loop — from kickoff and planning through delivery and launch." },

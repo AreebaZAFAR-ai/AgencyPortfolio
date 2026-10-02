@@ -8,7 +8,7 @@ interface TeamMemberCardProps {
 export function TeamMemberCard({ member }: TeamMemberCardProps) {
   return (
     <div className="group flex w-40 shrink-0 flex-col items-center gap-5 text-center sm:w-48 lg:w-56">
-      <div className="relative aspect-square w-full overflow-hidden rounded-full ring-1 ring-ah-border transition-[box-shadow] duration-500 group-hover:ring-ah-ink/50">
+      <div className="relative aspect-square w-full overflow-hidden rounded-full ring-1 ring-border-subtle transition-[box-shadow] duration-500 group-hover:ring-text-secondary">
         <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.08]">
           {member.image ? (
             <Image
@@ -20,8 +20,8 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
               className="object-cover"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-ah-ink/[0.05]">
-              <span className="font-heading text-[clamp(2rem,3.5vw,3rem)] text-ah-ink/70">
+            <div className="flex h-full w-full items-center justify-center bg-surface">
+              <span className="font-display text-[clamp(2rem,3.5vw,3rem)] text-text-secondary">
                 {member.initials}
               </span>
             </div>
@@ -30,10 +30,10 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <span className="font-heading text-body font-semibold text-ah-ink/80 transition-colors duration-300 group-hover:text-ah-ink">
+        <span className="font-display text-body font-semibold text-text-primary transition-colors duration-300 group-hover:text-text-primary">
           {member.name}
         </span>
-        <span className="text-caption text-ah-muted">{member.role}</span>
+        <span className="text-small text-text-secondary">{member.role}</span>
       </div>
     </div>
   );

@@ -11,14 +11,14 @@ interface GoalBlockProps {
 
 export function GoalBlock({ goal, reversed }: GoalBlockProps) {
   return (
-    <section className="border-t border-ah-muted/10 py-section-sm md:py-section">
+    <section className="border-t border-border-subtle py-section">
       <Container>
         <ScrollReveal
           as="div"
-          className={cn("grid items-center gap-10 lg:grid-cols-2", reversed && "lg:[&>*:first-child]:order-2")}
+          className={cn("grid items-center gap-(--space-2xl) lg:grid-cols-2", reversed && "lg:[&>*:first-child]:order-2")}
         >
-          <SectionTitle eyebrow={goal.eyebrow} title={goal.title} size="display" />
-          <p className="text-body-lg text-ah-muted">{goal.description}</p>
+          <SectionTitle eyebrow={goal.eyebrow} title={goal.title} size="h2" />
+          <p className="text-body-lg text-text-secondary">{goal.description}</p>
         </ScrollReveal>
       </Container>
     </section>

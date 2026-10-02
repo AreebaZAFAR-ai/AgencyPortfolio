@@ -1,8 +1,9 @@
 import type { ElementType, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
+// Every size shares the same gutter, so all content aligns to one grid.
 const sizeClasses = {
-  default: "max-w-[1400px]",
+  default: "max-w-(--container-max)",
   wide: "max-w-[1600px]",
   narrow: "max-w-[860px]",
   full: "max-w-none",
@@ -17,7 +18,7 @@ interface ContainerProps {
 
 export function Container({ as: As = "div", size = "default", className, children }: ContainerProps) {
   return (
-    <As className={cn("mx-auto w-full px-6 md:px-10 xl:px-16", sizeClasses[size], className)}>
+    <As className={cn("mx-auto w-full px-(--space-gutter)", sizeClasses[size], className)}>
       {children}
     </As>
   );

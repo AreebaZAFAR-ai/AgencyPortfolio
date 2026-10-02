@@ -1,4 +1,5 @@
 export { TextReveal } from "./TextReveal";
+export { WordScrub } from "./WordScrub";
 export { ImageReveal } from "./ImageReveal";
 export { ScrollReveal } from "./ScrollReveal";
 export { StaggerReveal } from "./StaggerReveal";

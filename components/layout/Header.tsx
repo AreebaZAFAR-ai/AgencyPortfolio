@@ -17,7 +17,6 @@ export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const el = navRef.current;
     if (!el || prefersReducedMotion()) return;
@@ -32,14 +31,14 @@ export function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-transparent bg-ah-bg">
+    <header className="sticky top-0 z-40 w-full border-b border-border-subtle bg-background">
       <Container>
-        <div ref={navRef} className="flex h-20 items-center justify-between">
-          <Link href="/" data-stagger data-cursor="hover" className="font-heading text-h3 text-ah-ink">
+        <div ref={navRef} className="flex h-(--header-height) items-center justify-between gap-(--space-xl)">
+          <Link href="/" data-stagger data-cursor="hover" className="font-display text-h3 font-bold text-text-primary">
             AH Growth
           </Link>
 
-          <nav className="hidden items-center gap-8 lg:flex">
+          <nav className="hidden items-center gap-(--space-xl) lg:flex">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -49,8 +48,8 @@ export function Header() {
                   data-stagger
                   data-cursor="hover"
                   className={cn(
-                    "text-body-sm transition-colors hover:text-ah-ink",
-                    isActive ? "text-ah-ink" : "text-ah-muted"
+                    "text-small font-medium transition-colors hover:text-text-primary",
+                    isActive ? "text-text-primary" : "text-text-secondary"
                   )}
                 >
                   {item.label}
@@ -72,7 +71,7 @@ export function Header() {
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
             data-stagger
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-ah-muted/30 text-ah-ink lg:hidden"
+            className="flex size-10 items-center justify-center rounded-full border border-border-subtle text-text-primary transition-colors hover:border-text-primary lg:hidden"
           >
             <MenuIcon className="h-5 w-5" />
           </button>

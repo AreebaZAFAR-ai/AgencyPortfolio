@@ -38,18 +38,18 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 const inputClass = `
   w-full
-  border-0
-  border-b
-  border-ah-border
-  bg-transparent
-  px-0
-  py-4
-  text-body-lg
-  text-ah-ink
+  rounded-lg
+  border
+  border-border-subtle
+  bg-surface
+  px-(--space-md)
+  py-(--space-md)
+  text-body
+  text-text-primary
   transition-colors
   duration-300
-  placeholder:text-ah-muted/40
-  focus:border-ah-ink
+  placeholder:text-text-muted
+  focus:border-text-secondary
   focus:outline-none
   focus:ring-0
 `;
@@ -73,16 +73,16 @@ function Field({
 
   return (
     <div className="w-full">
-      <div className="mb-3">
+      <div className="mb-(--space-sm)">
         <Label
           {...(htmlFor ? { htmlFor } : {})}
-          className="block text-body-sm font-medium text-ah-ink"
+          className="block text-small font-medium text-text-primary"
         >
           {label}
         </Label>
 
         {hint && (
-          <span className="mt-1 block text-caption text-ah-muted/80">
+          <span className="mt-1 block text-small text-text-muted">
             {hint}
           </span>
         )}
@@ -93,7 +93,7 @@ function Field({
       {error && (
         <p
           role="alert"
-          className="mt-2 text-caption text-red-400"
+          className="mt-(--space-xs) text-small text-destructive"
         >
           {error}
         </p>
@@ -118,11 +118,11 @@ function Chip({
       aria-pressed={selected}
       data-cursor="hover"
       className={cn(
-        "inline-flex h-10 items-center gap-2 rounded-full border px-4 text-body-sm transition-all duration-200",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ah-accent/60",
+        "inline-flex h-10 items-center gap-(--space-xs) rounded-full border px-(--space-md) text-small font-medium transition-colors duration-200",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-secondary",
         selected
-          ? "border-ah-ink bg-ah-ink text-ah-bg"
-          : "border-ah-muted/30 text-ah-ink hover:border-ah-ink/70"
+          ? "border-text-primary bg-text-primary text-background"
+          : "border-border-subtle bg-surface text-text-secondary hover:border-text-secondary hover:text-text-primary"
       )}
     >
       {selected && (
@@ -167,16 +167,16 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <section className="mx-auto flex w-full max-w-2xl flex-col items-center gap-5 py-16 text-center">
-        <span className="flex size-14 items-center justify-center rounded-full bg-ah-ink text-ah-bg">
+      <section className="mx-auto flex w-full max-w-2xl flex-col items-center gap-(--space-lg) py-(--space-3xl) text-center">
+        <span className="flex size-14 items-center justify-center rounded-full bg-text-primary text-background">
           <CheckIcon className="size-6" />
         </span>
 
-        <h3 className="font-heading text-display text-ah-ink">
+        <h3 className="font-display text-h2 text-text-primary">
           Message sent.
         </h3>
 
-        <p className="max-w-md text-body-lg text-ah-muted/70">
+        <p className="max-w-md text-body-lg text-text-secondary">
           Thanks for reaching out — we&rsquo;ll follow up
           within one business day.
         </p>
@@ -192,17 +192,17 @@ export function ContactForm() {
   }
 
   return (
-    <section className="w-full px-5 py-20 md:px-8 md:py-28">
+    <section className="w-full">
       <div className="mx-auto w-full max-w-3xl">
 
         {/* HEADING */}
-        <div className="mb-14 text-center md:mb-16">
-          <h2 className="font-heading text-display text-ah-ink md:text-hero">
-            Contact Us
+        <div className="mb-(--space-3xl) flex flex-col items-center gap-(--space-lg) text-center">
+          <h2 className="font-display text-h1 text-text-primary">
+            Tell us about your project
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-body-lg text-ah-muted/70">
-            Tell us about your project and let&rsquo;s create
+          <p className="max-w-xl text-body-lg text-text-secondary">
+            Share a few details and let&rsquo;s create
             something meaningful together.
           </p>
         </div>
@@ -215,7 +215,7 @@ export function ContactForm() {
           >
 
             {/* NAME */}
-            <div className="mb-10">
+            <div className="mb-(--space-xl)">
               <Field
                 label="Your name"
                 htmlFor="name"
@@ -232,7 +232,7 @@ export function ContactForm() {
             </div>
 
             {/* EMAIL */}
-            <div className="mb-10">
+            <div className="mb-(--space-xl)">
               <Field
                 label="Email address"
                 htmlFor="email"
@@ -250,7 +250,7 @@ export function ContactForm() {
             </div>
 
             {/* COMPANY */}
-            <div className="mb-10">
+            <div className="mb-(--space-xl)">
               <Field
                 label="Company"
                 htmlFor="company"
@@ -266,7 +266,7 @@ export function ContactForm() {
             </div>
 
             {/* SERVICES */}
-            <div className="mb-20">
+            <div className="mb-(--space-2xl)">
               <Field
                 label="What can we help with?"
                 hint="Select all that apply"
@@ -276,7 +276,7 @@ export function ContactForm() {
                   control={control}
                   name="services"
                   render={({ field }) => (
-                    <div className="mt-8 flex flex-wrap gap-2">
+                    <div className="mt-(--space-md) flex flex-wrap gap-(--space-xs)">
 
                       {services.map((service) => {
                         const selected =
@@ -339,7 +339,7 @@ export function ContactForm() {
             </div>
 
             {/* BUDGET */}
-            <div className="mb-20">
+            <div className="mb-(--space-2xl)">
               <Field
                 label="Project budget"
                 hint="Optional — helps us scope the right team"
@@ -348,7 +348,7 @@ export function ContactForm() {
                   control={control}
                   name="budget"
                   render={({ field }) => (
-                    <div className="mt-6 flex flex-wrap gap-2">
+                    <div className="mt-(--space-md) flex flex-wrap gap-(--space-xs)">
                       {budgetOptions.map((option) => (
                         <Chip
                           key={option}
@@ -373,7 +373,7 @@ export function ContactForm() {
             </div>
 
             {/* MESSAGE */}
-            <div className="mb-16">
+            <div className="mb-(--space-2xl)">
               <Field
                 label="Tell us about your project"
                 htmlFor="message"
@@ -393,8 +393,8 @@ export function ContactForm() {
             </div>
 
             {/* SUBMIT */}
-            <div className="flex flex-col items-center justify-between gap-5 border-t border-ah-border/50 pt-8 sm:flex-row">
-              <p className="text-caption text-ah-muted/60">
+            <div className="flex flex-col items-center justify-between gap-(--space-lg) border-t border-border-subtle pt-(--space-xl) sm:flex-row">
+              <p className="text-small text-text-muted">
                 We reply within one business day.
               </p>
 

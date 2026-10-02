@@ -40,6 +40,7 @@ export function ServiceRow({ service, index }: ServiceRowProps) {
   const imageMaskRef = useRef<HTMLDivElement>(null);
   const imageScaleRef = useRef<HTMLDivElement>(null);
   const imageParallaxRef = useRef<HTMLDivElement>(null);
+  const imageDriftRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const row = rowRef.current;
@@ -60,9 +61,30 @@ export function ServiceRow({ service, index }: ServiceRowProps) {
     const maskDirection: MaskDirection = reversed ? "left" : "right";
 
     const ctx = gsap.context(() => {
+      // Continuous scroll parallax: the image drifts inside its frame for
+      // the whole time the row is on screen, on every screen size.
+      if (imageDriftRef.current) {
+        gsap.fromTo(
+          imageDriftRef.current,
+          { yPercent: -6 },
+          {
+            yPercent: 6,
+            ease: "none",
+            scrollTrigger: {
+              trigger: row,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          },
+        );
+      }
+
       const mm = gsap.matchMedia();
 
-      mm.add({ isDesktop: "(min-width: 1024px)" }, (context) => {
+      // Both conditions are listed so the callback runs on every screen
+      // size -- matchMedia only fires while at least one of them matches.
+      mm.add({ isDesktop: "(min-width: 1024px)", isMobile: "(max-width: 1023px)" }, (context) => {
         const { isDesktop } = context.conditions as { isDesktop: boolean };
 
         // Fixed, height-independent entrance window (anchored to the row's top
@@ -172,28 +194,28 @@ export function ServiceRow({ service, index }: ServiceRowProps) {
     <div
       ref={rowRef}
       className={cn(
-        "group/row grid items-center gap-14 rounded-2xl transition-colors duration-500 hover:bg-ah-ink/2 lg:grid-cols-2 lg:gap-20",
+        "group/row grid items-center gap-(--space-2xl) lg:grid-cols-2 lg:gap-(--space-4xl)",
         reversed && "lg:[&>*:first-child]:order-2"
       )}
     >
-      <div ref={textOuterRef} className="flex flex-col gap-6">
-        <span ref={numberRef} className="type-eyebrow text-ah-muted">
+      <div ref={textOuterRef} className="flex flex-col gap-(--space-lg)">
+        <span ref={numberRef} className="type-eyebrow text-text-muted">
           {service.index}
         </span>
         <h3
           ref={nameRef}
-          className="font-heading text-section-md text-ah-ink"
+          className="font-display text-h2 text-text-primary"
         >
           {service.name}
         </h3>
-        <p ref={descRef} className="max-w-xl text-body-lg text-ah-muted">
+        <p ref={descRef} className="max-w-xl text-body-lg text-text-secondary">
           {service.shortDescription}
         </p>
-        <div ref={pillsRef} className="flex flex-wrap gap-2">
+        <div ref={pillsRef} className="flex flex-wrap gap-(--space-xs)">
           {service.technologies.map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-ah-muted/20 px-4 py-1.5 text-body-sm text-ah-muted transition-colors duration-300 group-hover/row:border-ah-ink/30 group-hover/row:bg-ah-ink/3"
+              className="rounded-full bg-surface px-(--space-md) py-1.5 text-small text-text-secondary"
             >
               {tech}
             </span>
@@ -203,7 +225,7 @@ export function ServiceRow({ service, index }: ServiceRowProps) {
           ref={linkRef}
           href={`/services/${service.slug}`}
           data-cursor="hover"
-          className="group inline-flex w-fit items-center gap-2 text-button text-ah-ink hover:text-ah-muted"
+          className="group mt-(--space-xs) inline-flex w-fit items-center gap-(--space-xs) text-small font-medium text-text-primary transition-colors hover:text-text-secondary"
         >
           View service
           <ArrowUpRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
@@ -215,14 +237,38 @@ export function ServiceRow({ service, index }: ServiceRowProps) {
           <div ref={imageScaleRef}>
             <div ref={imageParallaxRef}>
               {service.image ? (
-                <div className="relative h-[50vh] w-full overflow-hidden rounded-xl border border-ah-muted/15 lg:h-[70vh]">
-                  <Image
-                    src={service.image}
-                    alt={service.name}
-                    fill
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                    className="object-cover"
-                  />
+                <div className="relative h-[50vh] w-full overflow-hidden rounded-xl bg-surface lg:h-[70vh]">
+                  {service.imageFit === "contain" ? (
+                    // Whole image visible, so no oversized drift layer; a blurred
+                    // copy fills the card behind it so there are no empty bars.
+                    <>
+                      <Image
+                        src={service.image}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                        className="scale-110 object-cover blur-2xl"
+                      />
+                      <Image
+                        src={service.image}
+                        alt={service.name}
+                        fill
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                        className="object-contain"
+                      />
+                    </>
+                  ) : (
+                    /* Oversized so the scroll drift never reveals an edge. */
+                    <div ref={imageDriftRef} className="absolute inset-x-0 -inset-y-[8%] will-change-transform">
+                      <Image
+                        src={service.image}
+                        alt={service.name}
+                        fill
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
                 </div>
               ) : (
                 <PlaceholderMedia

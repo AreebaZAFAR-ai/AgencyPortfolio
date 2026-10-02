@@ -11,9 +11,9 @@ const aspectClasses = {
 } as const;
 
 const toneClasses = {
-  bg: "bg-ah-ink/[0.04] border-ah-muted/15",
-  accent: "bg-ah-accent/40 border-ah-accent",
-  muted: "bg-ah-ink/[0.06] border-ah-muted/20",
+  bg: "bg-surface border-border-subtle",
+  accent: "bg-surface border-surface",
+  muted: "bg-surface border-border-subtle",
 } as const;
 
 interface PlaceholderMediaProps {
@@ -48,9 +48,9 @@ export function PlaceholderMedia({
     const avatarContent = (
       <div className="flex h-full w-full items-center justify-center">
         {initials ? (
-          <span className="font-heading text-h3 text-ah-ink">{initials}</span>
+          <span className="font-display text-h3 text-text-primary">{initials}</span>
         ) : (
-          <UserIcon className="h-6 w-6 text-ah-muted" />
+          <UserIcon className="h-6 w-6 text-text-secondary" />
         )}
       </div>
     );
@@ -74,10 +74,10 @@ export function PlaceholderMedia({
     className
   );
   const mediaContent = (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-      <FallbackIcon className="h-7 w-7 text-ah-muted" />
+    <div className="flex h-full w-full flex-col items-center justify-center gap-(--space-sm)">
+      <FallbackIcon className="h-7 w-7 text-text-secondary" />
       {label && (
-        <span className="type-eyebrow px-4 text-center text-ah-muted">
+        <span className="type-eyebrow px-(--space-md) text-center text-text-secondary">
           {label}
         </span>
       )}

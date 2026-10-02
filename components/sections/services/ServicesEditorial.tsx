@@ -4,9 +4,9 @@ import { ServiceRow } from "@/components/sections/services/ServiceRow";
 
 export function ServicesEditorial() {
   return (
-    <section className="relative overflow-hidden bg-ah-bg py-section-sm md:py-section">
+    <section className="relative overflow-hidden py-section">
       <Container>
-        <div className="relative z-10 flex flex-col gap-28 md:gap-36">
+        <div className="relative z-10 flex flex-col gap-section">
           {services.map((service, index) => (
             <ServiceRow
               key={service.slug}

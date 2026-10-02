@@ -14,6 +14,7 @@ import {
 } from "@/components/animations";
 import { PixelImage } from "@/components/ui/pixel-image";
 import { cn } from "@/lib/utils";
+import { heroVideo } from "@/data/hero";
 
 interface HeroCta {
   label: string;
@@ -47,10 +48,8 @@ interface PageHeroProps {
   hideContent?: boolean;
 }
 
-const heroVideos = [
-  "/assets/images/hero/hero_bg_video.mp4",
-  "/assets/hero/hero_2.mp4",
-];
+// Background videos to cross-fade between. With a single entry it just loops.
+const heroVideos: string[] = [heroVideo.src];
 
 export function PageHero({
   label,
@@ -85,6 +84,8 @@ export function PageHero({
       });
     }
 
+    if (heroVideos.length < 2) return;
+
     const timer = window.setInterval(() => {
       setActiveVideo((current) => (current === 0 ? 1 : 0));
     }, 9000);
@@ -107,7 +108,7 @@ export function PageHero({
   return (
     <section
       className={cn(
-        "relative isolate flex items-center overflow-hidden border-b border-ah-muted/10 pt-28 pb-16 md:pt-32",
+        "relative isolate flex items-center overflow-hidden pt-[calc(var(--header-height)+var(--space-3xl))] pb-(--space-3xl)",
         minHeightClass
       )}
     >
@@ -161,48 +162,28 @@ export function PageHero({
               />
 
               {/* Video 2 */}
-              <video
-                ref={videoRefs[1]}
-                className={cn(
-                  "absolute inset-0 h-full w-full object-cover transition-all duration-[1800ms] ease-in-out",
-                  activeVideo === 1
-                    ? "scale-100 opacity-100"
-                    : "scale-110 opacity-0"
-                )}
-                src={heroVideos[1]}
-                muted
-                loop
-                playsInline
-                preload="auto"
-              />
+              {heroVideos[1] && (
+                <video
+                  ref={videoRefs[1]}
+                  className={cn(
+                    "absolute inset-0 h-full w-full object-cover transition-all duration-[1800ms] ease-in-out",
+                    activeVideo === 1
+                      ? "scale-100 opacity-100"
+                      : "scale-110 opacity-0"
+                  )}
+                  src={heroVideos[1]}
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                />
+              )}
             </>
           )}
         </Parallax>
 
-        {/* ================================================= */}
-        {/* SUBTLE VIGNETTE */}
-        {/* ================================================= */}
-
-        <div
-          className={cn(
-            "absolute inset-0 bg-gradient-to-b",
-            backgroundImage
-              ? "from-ah-bg/10 via-transparent to-ah-bg/40"
-              : "from-transparent via-transparent to-ah-ink/5"
-          )}
-        />
-
-        {/* ================================================= */}
-        {/* GRAIN */}
-        {/* ================================================= */}
-
-        <div
-          className="absolute inset-0 opacity-[0.045] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
-          }}
-        />
+        {/* Flat scrim keeps the copy readable over any media. */}
+        <div className="absolute inset-0 bg-background/60" />
       </div>
 
       {/* ===================================================== */}
@@ -214,7 +195,7 @@ export function PageHero({
         <Container>
           <div
             className={cn(
-              "grid items-center gap-12",
+              "grid items-center gap-(--space-3xl)",
               variant === "home"
                 ? "lg:grid-cols-[1.1fr_0.9fr]"
                 : "lg:grid-cols-[1fr_0.7fr]"
@@ -224,15 +205,15 @@ export function PageHero({
             {/* TEXT */}
             {/* ================================================= */}
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-(--space-lg)">
               <TextReveal
                 as="span"
-                className="type-eyebrow text-ah-muted"
+                className="type-eyebrow text-text-muted"
               >
                 {label}
               </TextReveal>
 
-              <h1 className="font-heading text-hero text-ah-ink">
+              <h1 className="font-display text-hero text-text-primary">
                 {lines.map((line, index) => (
                   <TextReveal
                     as="span"
@@ -245,12 +226,12 @@ export function PageHero({
                 ))}
               </h1>
 
-              <p className="max-w-lg text-body-lg text-ah-muted">
+              <p className="max-w-lg text-body-lg text-text-secondary">
                 {description}
               </p>
 
               {(primaryCta || secondaryCta) && (
-                <div className="mt-2 flex flex-wrap items-center gap-4">
+                <div className="mt-(--space-md) flex flex-wrap items-center gap-(--space-sm)">
                   {primaryCta && (
                     <MagneticButton>
                       <Button

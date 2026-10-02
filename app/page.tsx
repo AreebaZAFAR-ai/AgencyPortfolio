@@ -5,6 +5,8 @@ import { TechStrip } from "@/components/sections/home/TechStrip";
 import { ServicesStrip } from "@/components/sections/home/ServicesStrip";
 import { ProjectGallery } from "@/components/sections/home/ProjectGallery";
 import { TestimonialsCarousel } from "@/components/sections/home/TestimonialsCarousel";
+import { CapsuleSection } from "@/components/sections/home/CapsuleSection";
+import { FirstLookSection } from "@/components/sections/home/FirstLookSection";
 import { CtaBanner } from "@/components/common/CtaBanner";
 
 export default function Home() {
@@ -16,6 +18,8 @@ export default function Home() {
       <TechStrip />
       <ProjectGallery />
       <TestimonialsCarousel />
+      {/* <CapsuleSection /> */}
+      {/* <FirstLookSection /> */}
       <CtaBanner />
     </>
   );

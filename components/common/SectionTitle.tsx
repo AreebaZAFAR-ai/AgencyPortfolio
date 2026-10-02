@@ -7,13 +7,11 @@ interface SectionTitleProps {
   description?: ReactNode;
   align?: "left" | "center";
   as?: "h1" | "h2" | "h3";
-  size?: "display" | "section-md" | "h1" | "h2" | "h3";
+  size?: "h1" | "h2" | "h3";
   className?: string;
 }
 
 const sizeClasses = {
-  display: "text-display",
-  "section-md": "text-section-md",
   h1: "text-h1",
   h2: "text-h2",
   h3: "text-h3",
@@ -32,9 +30,9 @@ export function SectionTitle({
   const lines = Array.isArray(title) ? title : [title];
 
   return (
-    <div className={cn("flex flex-col gap-4", align === "center" && "items-center text-center", className)}>
-      {eyebrow && <span className="type-eyebrow text-ah-muted">{eyebrow}</span>}
-      <Heading className={cn("font-heading text-ah-ink", sizeClasses[size])}>
+    <div className={cn("flex flex-col gap-(--space-lg)", align === "center" && "items-center text-center", className)}>
+      {eyebrow && <span className="type-eyebrow text-text-muted">{eyebrow}</span>}
+      <Heading className={cn("font-display text-text-primary", sizeClasses[size])}>
         {lines.map((line, index) => (
           <span key={index} className="block">
             {line}
@@ -42,7 +40,7 @@ export function SectionTitle({
         ))}
       </Heading>
       {description && (
-        <p className={cn("max-w-2xl text-body-lg text-ah-muted", align === "center" && "mx-auto")}>
+        <p className={cn("max-w-2xl text-body-lg text-text-secondary", align === "center" && "mx-auto")}>
           {description}
         </p>
       )}

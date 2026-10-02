@@ -13,6 +13,8 @@ interface ServiceProcessProps {
   steps: ServiceProcessStepDetail[];
   eyebrow?: string;
   title?: string | string[];
+  // "contain" shows each whole image instead of cropping it to the card
+  imageFit?: "cover" | "contain";
 }
 
 // Matches the sticky Header's h-20 -- the panel pins directly beneath it.
@@ -32,6 +34,7 @@ export function ServiceProcess({
   steps,
   eyebrow = "How we work",
   title = ["A clear process.", "A better outcome."],
+  imageFit = "cover",
 }: ServiceProcessProps) {
   const pinRef = useRef<HTMLDivElement>(null);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -162,17 +165,17 @@ export function ServiceProcess({
   const columns: CSSProperties = { gridTemplateColumns: `repeat(${count}, minmax(0, 1fr))` };
 
   return (
-    <section className="relative border-t border-ah-muted/10">
-      <Container className="pt-section-sm pb-12 md:pt-section md:pb-14">
-        <SectionTitle eyebrow={eyebrow} title={title} size="display" />
+    <section className="relative">
+      <Container className="pt-section pb-(--space-2xl)">
+        <SectionTitle eyebrow={eyebrow} title={title} size="h2" />
       </Container>
 
       {/* ===================================================== */}
       {/* PINNED PANEL (tablet + desktop, motion allowed)       */}
       {/* ===================================================== */}
       <div ref={pinRef} className="hidden md:motion-safe:block">
-        <Container className="flex h-[calc(100dvh-5rem)] flex-col justify-center gap-8 py-8 lg:gap-12 lg:py-10">
-          <div className="grid items-center gap-10 md:grid-cols-2 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+        <Container className="flex h-[calc(100dvh-var(--header-height))] flex-col justify-center gap-(--space-xl) py-(--space-xl) lg:gap-(--space-2xl)">
+          <div className="grid items-center gap-(--space-2xl) md:grid-cols-2 lg:grid-cols-[0.85fr_1.15fr] lg:gap-(--space-4xl)">
             {/* Text slot: all steps stacked in one grid cell so its height
                 never changes between steps. */}
             <div className="grid">
@@ -183,18 +186,18 @@ export function ServiceProcess({
                     textRefs.current[i] = el;
                   }}
                   className={cn(
-                    "col-start-1 row-start-1 flex flex-col gap-5 self-center lg:gap-6",
+                    "col-start-1 row-start-1 flex flex-col gap-(--space-lg) self-center",
                     i > 0 && "invisible opacity-0"
                   )}
                 >
-                  <span className="font-heading text-display tabular-nums text-ah-muted/30">
+                  <span className="font-display text-h1 tabular-nums text-surface">
                     {step.number}
                   </span>
-                  <h3 className="font-heading text-section-md text-ah-ink">{step.title}</h3>
-                  <p className="max-w-md text-body-lg text-ah-muted/75">{step.description}</p>
-                  <ul className="mt-2 flex max-w-md flex-wrap gap-x-6 gap-y-2 border-t border-ah-muted/15 pt-5">
+                  <h3 className="font-display text-h2 text-text-primary">{step.title}</h3>
+                  <p className="max-w-md text-body-lg text-text-secondary">{step.description}</p>
+                  <ul className="flex max-w-md flex-wrap gap-x-(--space-lg) gap-y-(--space-xs) pt-(--space-xs)">
                     {step.meta.map((item) => (
-                      <li key={item} className="type-eyebrow text-ah-muted/60">
+                      <li key={item} className="type-eyebrow text-text-muted">
                         {item}
                       </li>
                     ))}
@@ -204,7 +207,15 @@ export function ServiceProcess({
             </div>
 
             {/* Image frame: fixed dimensions, only the layers inside change. */}
-            <div className="relative h-[44vh] overflow-hidden rounded-xl border border-ah-muted/15 bg-ah-ink/5 lg:h-[56vh]">
+            <div
+              className={cn(
+                "relative overflow-hidden rounded-xl bg-surface",
+                // Frame takes the tall images' own 2:3 shape so each fills it whole.
+                imageFit === "contain"
+                  ? "aspect-[2/3] h-[52vh] w-auto justify-self-center lg:h-[66vh]"
+                  : "h-[44vh] lg:h-[56vh]"
+              )}
+            >
               {steps.map((step, i) => (
                 <div
                   key={step.number}
@@ -226,7 +237,7 @@ export function ServiceProcess({
                       alt={step.image.alt}
                       fill
                       sizes="(min-width: 1024px) 55vw, 50vw"
-                      className="object-cover"
+                      className={imageFit === "contain" ? "object-contain p-1.5" : "object-cover"}
                     />
                   </div>
                 </div>
@@ -235,13 +246,13 @@ export function ServiceProcess({
           </div>
 
           {/* Pipeline */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-(--space-sm)">
             <div className="grid" style={columns} aria-hidden="true">
               {steps.map((step, i) => (
                 <span
                   key={step.number}
                   data-pipeline-label={i}
-                  className={cn("type-eyebrow text-center tabular-nums text-ah-ink", i > 0 && "opacity-35")}
+                  className={cn("type-eyebrow text-center tabular-nums text-text-primary", i > 0 && "opacity-35")}
                 >
                   {step.number}
                 </span>
@@ -249,10 +260,10 @@ export function ServiceProcess({
             </div>
 
             <div className="relative">
-              <span className="absolute top-[calc(50%-0.5px)] h-px bg-ah-muted/20" style={trackInset} />
+              <span className="absolute top-[calc(50%-0.5px)] h-px bg-border-subtle" style={trackInset} />
               <span
                 ref={fillRef}
-                className="absolute top-[calc(50%-0.5px)] h-px origin-left bg-ah-ink"
+                className="absolute top-[calc(50%-0.5px)] h-px origin-left bg-text-primary"
                 style={{ ...trackInset, transform: "scaleX(0)" }}
               />
               <ol aria-label="Process progress" className="relative grid h-4 items-center" style={columns}>
@@ -269,14 +280,14 @@ export function ServiceProcess({
                     ref={(el) => {
                       dotRefs.current[i] = el;
                     }}
-                    className="relative block h-3 w-3 rounded-full border border-ah-muted/40 bg-ah-bg"
+                    className="relative block size-3 rounded-full border border-text-muted bg-background"
                     style={{ transform: `scale(${i === 0 ? 1.35 : 1})` }}
                   >
                     <span
                       ref={(el) => {
                         dotFillRefs.current[i] = el;
                       }}
-                      className="absolute -inset-px rounded-full bg-ah-ink"
+                      className="absolute -inset-px rounded-full bg-text-primary"
                       style={{ transform: `scale(${i === 0 ? 1 : 0})` }}
                     />
                   </span>
@@ -290,7 +301,7 @@ export function ServiceProcess({
                 <span
                   key={step.number}
                   data-pipeline-label={i}
-                  className={cn("text-center text-body-sm text-ah-ink", i > 0 && "opacity-35")}
+                  className={cn("text-center text-small text-text-primary", i > 0 && "opacity-35")}
                 >
                   {step.title}
                 </span>
@@ -303,33 +314,39 @@ export function ServiceProcess({
       {/* ===================================================== */}
       {/* STACKED LIST (mobile, or reduced motion at any size)  */}
       {/* ===================================================== */}
-      <Container className="pb-section-sm md:motion-safe:hidden">
-        <ol className="flex flex-col gap-16">
+      <Container className="pb-section md:motion-safe:hidden">
+        <ol className="flex flex-col gap-(--space-3xl)">
           {steps.map((step) => (
             <ScrollReveal
               key={step.number}
               as="li"
-              className="grid gap-6 border-t border-ah-muted/15 pt-8 md:grid-cols-2 md:items-center md:gap-12"
+              className="grid gap-(--space-lg) border-t border-border-subtle pt-(--space-xl) md:grid-cols-2 md:items-center md:gap-(--space-2xl)"
             >
-              <div className="flex flex-col gap-4">
-                <span className="font-heading text-h1 tabular-nums text-ah-muted/40">{step.number}</span>
-                <h3 className="font-heading text-section-md text-ah-ink">{step.title}</h3>
-                <p className="text-body-lg text-ah-muted/75">{step.description}</p>
-                <ul className="flex flex-wrap gap-x-5 gap-y-2 pt-1">
+              <div className="flex flex-col gap-(--space-md)">
+                <span className="font-display text-h2 tabular-nums text-surface">{step.number}</span>
+                <h3 className="font-display text-h2 text-text-primary">{step.title}</h3>
+                <p className="text-body-lg text-text-muted">{step.description}</p>
+                <ul className="flex flex-wrap gap-x-(--space-lg) gap-y-(--space-xs) pt-1">
                   {step.meta.map((item) => (
-                    <li key={item} className="type-eyebrow text-ah-muted/60">
+                    <li key={item} className="type-eyebrow text-text-muted">
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-ah-muted/15 bg-ah-ink/5">
+              <div
+                className={cn(
+                  "relative overflow-hidden rounded-xl bg-surface",
+                  // Taller card when showing whole images so they stay large.
+                  imageFit === "contain" ? "aspect-[2/3]" : "aspect-[4/3]"
+                )}
+              >
                 <Image
                   src={step.image.src}
                   alt={step.image.alt}
                   fill
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover"
+                  className={imageFit === "contain" ? "object-contain p-1.5" : "object-cover"}
                 />
               </div>
             </ScrollReveal>

@@ -20,10 +20,10 @@ export function CtaBanner({
   ctaHref = "/contact",
 }: CtaBannerProps) {
   return (
-    <section className="border-t border-ah-muted/10 py-section-sm md:py-section">
+    <section className="py-section">
       <Container>
-        <ScrollReveal as="div" className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
-          <SectionTitle eyebrow={eyebrow} title={title} description={description} size="display" />
+        <ScrollReveal as="div" className="flex flex-col items-start justify-between gap-(--space-2xl) md:flex-row md:items-end">
+          <SectionTitle eyebrow={eyebrow} title={title} description={description} size="h2" />
           <MagneticButton className="shrink-0">
             <Button href={ctaHref} size="lg" icon={<ArrowUpRightIcon className="h-4 w-4" />}>
               {ctaLabel}

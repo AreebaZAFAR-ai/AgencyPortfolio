@@ -12,9 +12,9 @@ export function ServiceTechnicalStrip({ items, eyebrow = "Technology we use" }: 
   const run = items.length < 6 ? [...items, ...items] : items;
 
   return (
-    <section className="overflow-hidden border-y border-ah-muted/10 py-12 md:py-16">
+    <section className="overflow-hidden bg-surface py-(--space-4xl)">
       <Container>
-        <span className="type-eyebrow text-ah-muted/60">{eyebrow}</span>
+        <span className="type-eyebrow text-text-muted">{eyebrow}</span>
       </Container>
 
       {/* Static, readable list for assistive tech; the marquee is decorative. */}
@@ -24,8 +24,8 @@ export function ServiceTechnicalStrip({ items, eyebrow = "Technology we use" }: 
         ))}
       </ul>
 
-      <div aria-hidden="true" className="group mt-8 md:mt-10">
-        <div className="flex w-max animate-[marquee_60s_linear_infinite] items-center group-hover:[animation-play-state:paused] motion-reduce:w-auto motion-reduce:animate-none motion-reduce:flex-wrap motion-reduce:px-6">
+      <div aria-hidden="true" className="group mt-(--space-xl)">
+        <div className="flex w-max animate-[marquee_60s_linear_infinite] items-center group-hover:[animation-play-state:paused] motion-reduce:w-auto motion-reduce:animate-none motion-reduce:flex-wrap motion-reduce:px-(--space-lg)">
           {[run, run].map((copy, copyIndex) => (
             <div
               key={copyIndex}
@@ -33,10 +33,9 @@ export function ServiceTechnicalStrip({ items, eyebrow = "Technology we use" }: 
             >
               {copy.map((item, index) => (
                 <Fragment key={`${item}-${index}`}>
-                  <span className="shrink-0 whitespace-nowrap font-heading text-h1 text-ah-muted/70">
+                  <span className="shrink-0 whitespace-nowrap pr-(--space-3xl) font-display text-h2 text-text-muted">
                     {item}
                   </span>
-                  <span className="shrink-0 px-6 text-h3 text-ah-muted/30 md:px-10">✦</span>
                 </Fragment>
               ))}
             </div>

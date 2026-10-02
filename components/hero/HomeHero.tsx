@@ -65,8 +65,12 @@ export function HomeHero({ content, video }: HomeHeroProps) {
         playsInline
         loop
         preload="auto"
+        poster={video.poster}
         aria-hidden="true"
       >
+        {video.mobileSrc && (
+          <source src={video.mobileSrc} type="video/mp4" media="(max-width: 767px)" />
+        )}
         <source src={video.src} type="video/mp4" />
       </motion.video>
 
@@ -74,7 +78,7 @@ export function HomeHero({ content, video }: HomeHeroProps) {
           VIDEO OVERLAY
           ===================================================== */}
 
-      <div className="absolute inset-x-0 -top-20 h-[calc(100%+5rem)] bg-black/20" />
+      <div className="absolute inset-x-0 -top-20 h-[calc(100%+5rem)] bg-background/40" />
 
       {/* =====================================================
           HERO CONTENT
@@ -96,18 +100,12 @@ export function HomeHero({ content, video }: HomeHeroProps) {
           min-h-screen
           items-center
           justify-center
-          px-5
-          pt-24
+          pt-(--header-height)
           text-center
-          text-white
-          md:pt-28
-          lg:pt-32
+          text-text-primary
         "
       >
-        <Container
-          size="narrow"
-          className="flex w-full flex-col items-center px-0"
-        >
+        <Container className="flex w-full flex-col items-center">
           {/* =================================================
               HEADING
               ================================================= */}
@@ -133,7 +131,7 @@ export function HomeHero({ content, video }: HomeHeroProps) {
               delay: reduceMotion ? 0 : 0.25,
             }}
           >
-            <h1 className="font-heading text-hero text-white">
+            <h1 className="flex flex-col items-center gap-[0.45em] font-display text-[clamp(2.5rem,5vw,5rem)] font-medium leading-[1.1] tracking-[-0.03em] text-white">
               {content.heading.map((line, index) => (
                 <span key={index} className="block">
                   {line}
@@ -168,11 +166,11 @@ export function HomeHero({ content, video }: HomeHeroProps) {
               delay: reduceMotion ? 0 : 0.75,
             }}
             className="
-              mt-7
+              mt-(--space-xl)
               max-w-xl
               text-balance
               text-body-lg
-              text-white/80
+              text-white
             "
           >
             {content.description}
@@ -205,11 +203,11 @@ export function HomeHero({ content, video }: HomeHeroProps) {
                 delay: reduceMotion ? 0 : 0.9,
               }}
               className="
-                mt-7
+                mt-(--space-2xl)
                 flex
                 flex-wrap
                 justify-center
-                gap-2
+                gap-(--space-sm)
               "
             >
               {/* PRIMARY CTA */}
@@ -233,12 +231,7 @@ export function HomeHero({ content, video }: HomeHeroProps) {
                     href={content.secondaryCta.href}
                     variant="outline"
                     size="lg"
-                    className="
-                      border-white/40
-                      text-white
-                      hover:border-white/70
-                      hover:bg-white/10
-                    "
+                    className="border-text-muted"
                   >
                     {content.secondaryCta.label}
                   </Button>
@@ -253,25 +246,9 @@ export function HomeHero({ content, video }: HomeHeroProps) {
           BOTTOM LABEL
           ===================================================== */}
 
-      <div
-        className="
-          type-eyebrow
-          absolute
-          bottom-5
-          right-5
-          z-10
-          rounded-full
-          border
-          border-white/30
-          bg-black/20
-          px-3
-          py-1.5
-          text-white/80
-          backdrop-blur-md
-        "
-      >
-        Software &amp; digital agency
-      </div>
+      <Container className="absolute inset-x-0 bottom-(--space-xl) z-10 flex justify-end">
+        <span className="type-eyebrow text-text-muted">Software &amp; digital agency</span>
+      </Container>
     </section>
   );
 }

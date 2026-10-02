@@ -13,7 +13,7 @@ interface ProjectNarrativeProps {
 function ResultValue({ value }: { value: string }) {
   const { ref, display } = useCountUp(value);
   return (
-    <span ref={ref} className="font-heading text-h3 text-ah-ink">
+    <span ref={ref} className="font-display text-h3 text-text-primary">
       {display}
     </span>
   );
@@ -27,19 +27,19 @@ const narrativeBlocks = [
 
 export function ProjectNarrative({ project }: ProjectNarrativeProps) {
   return (
-    <section className="py-section-sm md:py-section">
+    <section className="py-section">
       <Container>
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.7fr_1.3fr]">
-          <ScrollReveal as="div" className="flex flex-col gap-6">
-            <span className="type-eyebrow text-ah-muted">Client</span>
-            <p className="text-body text-ah-ink">{project.clientBlurb}</p>
+        <div className="grid grid-cols-1 gap-(--space-2xl) lg:grid-cols-[0.7fr_1.3fr]">
+          <ScrollReveal as="div" className="flex flex-col gap-(--space-lg)">
+            <span className="type-eyebrow text-text-muted">Client</span>
+            <p className="text-body text-text-primary">{project.clientBlurb}</p>
 
-            <div className="mt-6 flex flex-col gap-2">
-              <span className="type-eyebrow text-ah-muted">Results</span>
-              <div className="flex flex-col gap-3">
+            <div className="mt-(--space-lg) flex flex-col gap-(--space-xs)">
+              <span className="type-eyebrow text-text-muted">Results</span>
+              <div className="flex flex-col gap-(--space-sm)">
                 {project.results.map((result) => (
-                  <div key={result.label} className="flex items-baseline justify-between border-b border-ah-muted/10 pb-2">
-                    <span className="text-body-sm text-ah-muted">{result.label}</span>
+                  <div key={result.label} className="flex items-baseline justify-between border-b border-border-subtle pb-(--space-xs)">
+                    <span className="text-small text-text-secondary">{result.label}</span>
                     <ResultValue value={result.value} />
                   </div>
                 ))}
@@ -47,21 +47,21 @@ export function ProjectNarrative({ project }: ProjectNarrativeProps) {
             </div>
           </ScrollReveal>
 
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-(--space-2xl)">
             {narrativeBlocks.map((block, index) => (
               <ScrollReveal key={block.key} as="div" delay={index * 0.1}>
-                <SectionTitle eyebrow={block.eyebrow} title={block.title} size="h2" />
+                <SectionTitle eyebrow={block.eyebrow} title={block.title} size="h3" />
                 {block.key === "designProcess" ? (
-                  <ul className="mt-4 flex max-w-2xl flex-col gap-2">
+                  <ul className="mt-(--space-md) flex max-w-2xl flex-col gap-(--space-xs)">
                     {project.designProcess.map((step) => (
-                      <li key={step} className="flex gap-3 text-body-sm text-ah-ink/85">
-                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ah-muted" />
+                      <li key={step} className="flex gap-(--space-sm) text-small text-text-primary">
+                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-text-muted" />
                         {step}
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-4 max-w-2xl text-body text-ah-muted">{project[block.key]}</p>
+                  <p className="mt-(--space-md) max-w-2xl text-body text-text-secondary">{project[block.key]}</p>
                 )}
               </ScrollReveal>
             ))}

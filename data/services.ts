@@ -9,7 +9,8 @@ export const services: Service[] = [
     slug: "google-business-profile",
     index: "01",
     name: "Google Business Profile",
-    image: "/assets/images/services/GMap.webp",
+    image: "/assets/images/services/googlemap1.jpg",
+    imageFit: "contain",
     size: "sm",
 
     heroHeading:
@@ -115,7 +116,7 @@ export const services: Service[] = [
     slug: "digital-marketing",
     index: "02",
     name: "Digital Marketing",
-    image: "/assets/images/services/DM.webp",
+    image: "/assets/images/services/digital-new.jpg",
     size: "sm",
 
     heroHeading:
@@ -226,7 +227,7 @@ export const services: Service[] = [
     slug: "web-development",
     index: "03",
     name: "Web Development",
-    image: "/assets/images/services/web.jpg",
+    image: "/assets/images/services/web--.jpg",
     size: "lg",
 
     heroHeading:
@@ -342,7 +343,7 @@ export const services: Service[] = [
     slug: "app-development",
     index: "04",
     name: "App Development",
-    image: "/assets/images/services/PM.jpg",
+    image: "/assets/images/services/app-card.jpg",
     size: "md",
 
     heroHeading:
@@ -448,7 +449,7 @@ export const services: Service[] = [
     slug: "ui-ux-design",
     index: "05",
     name: "UI/UX Design",
-    image: "/assets/images/services/UI.jpg",
+    image: "/assets/images/services/website-design.jpg",
     size: "md",
 
     heroHeading:
@@ -554,7 +555,7 @@ export const services: Service[] = [
     slug: "ai-automation",
     index: "06",
     name: "AI Automation",
-    image: "/assets/images/services/ai.jpg",
+    image: "/assets/images/services/ai-new.jpg",
     size: "sm",
 
     heroHeading:
@@ -660,7 +661,7 @@ export const services: Service[] = [
     slug: "e-commerce",
     index: "07",
     name: "E-Commerce",
-    image: "/assets/images/services/ecommerce.jpg",
+    image: "/assets/images/services/ecommerce-new.jpg",
     size: "sm",
 
     heroHeading:

@@ -11,7 +11,14 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <WordHero title="SERVICES" />
+      <WordHero
+        title="SERVICES"
+        image={{
+          src: "/assets/images/services/hero/services-team-hero.jpg",
+          alt: "Team working together on laptops around a shared table",
+          titleAlign: "center",
+        }}
+      />
       <ServicesEditorial />
       <CtaBanner />
     </>

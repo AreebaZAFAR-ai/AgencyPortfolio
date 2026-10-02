@@ -63,9 +63,9 @@ export function CustomCursor({ enabled = true }: CustomCursorProps) {
       <div
         ref={ringRef}
         data-state="default"
-        className="fixed top-0 left-0 -ml-4 -mt-4 h-8 w-8 rounded-full border border-ah-ink/50 transition-[width,height,margin] duration-200 data-[state=hover]:h-12 data-[state=hover]:w-12 data-[state=hover]:-ml-6 data-[state=hover]:-mt-6 data-[state=hover]:border-ah-ink"
+        className="fixed top-0 left-0 -ml-4 -mt-4 h-8 w-8 rounded-full border border-text-secondary transition-[width,height,margin] duration-200 data-[state=hover]:h-12 data-[state=hover]:w-12 data-[state=hover]:-ml-6 data-[state=hover]:-mt-6 data-[state=hover]:border-text-primary"
       />
-      <div ref={dotRef} className="fixed top-0 left-0 -ml-1 -mt-1 h-2 w-2 rounded-full bg-ah-ink" />
+      <div ref={dotRef} className="fixed top-0 left-0 -ml-1 -mt-1 h-2 w-2 rounded-full bg-text-primary" />
     </div>
   );
 }

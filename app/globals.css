@@ -5,229 +5,116 @@
 @custom-variant dark (&:is(.dark *));
 
 /* =========================================================
-   AH GROWTH — EDITORIAL / LIGHT OLIVE DESIGN SYSTEM
+   AH GROWTH — DARK EDITORIAL DESIGN SYSTEM
+
+   Global tokens  ->  reusable utilities/components  ->  pages.
+   Every colour, type size, line-height and spacing value the
+   components use resolves to a token defined in this file.
    ========================================================= */
 
 @theme {
   /* =======================================================
-     CORE BRAND PALETTE
-     Legacy `ah-*` utilities mapped onto the light sage/olive
-     tokens defined in :root below.
+     COLOUR -- source of truth
      ======================================================= */
 
-  --color-ah-bg: #F6F7F4;
-  --color-ah-ink: #161C14;
+  --color-background: #000000;
+  --color-surface: #383532;
 
-  --color-ah-accent: #97A87A;
-  --color-ah-accent-soft: #4F5B2A;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgb(255 255 255 / 0.72);
+  --color-text-muted: rgb(255 255 255 / 0.5);
 
-  --color-ah-violet: #4F5B2A;
+  --color-border-subtle: rgb(255 255 255 / 0.12);
 
-  --color-ah-muted: #4B5547;
-  --color-ah-muted-dark: #6B7766;
+  /* Accents -- used sparingly: star ratings and the active testimonial. */
+  --color-rating: #f5a623;
+  --color-highlight: #c8001e;
 
   /* =======================================================
-     SURFACES
+     TYPOGRAPHY
+     Each `text-*` tier bundles size, line-height, tracking
+     and weight, so one utility fully sets that tier.
      ======================================================= */
 
-  --color-ah-surface: #ECEFE9;
-  --color-ah-surface-light: #FFFFFF;
+  --leading-display: 0.92;
+  --leading-heading: 1;
+  --leading-body: 1.6;
 
-  --color-ah-border: #DDE3D8;
+  --text-hero: clamp(4rem, 9vw, 9rem);
+  --text-hero--line-height: var(--leading-display);
+  --text-hero--letter-spacing: -0.035em;
+  --text-hero--font-weight: 500;
 
-  /* =======================================================
-     TYPE SCALE -- single source of truth for every text
-     style on the site. Each tier bundles size, line-height,
-     letter-spacing, and font-weight so a single `text-*`
-     utility fully sets that tier -- no per-usage overrides.
-     ======================================================= */
+  --text-h1: clamp(3rem, 6vw, 6rem);
+  --text-h1--line-height: var(--leading-heading);
+  --text-h1--letter-spacing: -0.03em;
+  --text-h1--font-weight: 500;
 
-  /* Hero / Main Display */
-  --text-hero: clamp(3.25rem, 6.4vw, 5.5rem);
-  --text-hero--line-height: 1.04;
-  --text-hero--letter-spacing: -0.03em;
-  --text-hero--font-weight: 600;
+  --text-h2: clamp(2rem, 3.5vw, 4rem);
+  --text-h2--line-height: var(--leading-heading);
+  --text-h2--letter-spacing: -0.025em;
+  --text-h2--font-weight: 500;
 
-  /* Large Section Headings */
-  --text-display: clamp(2.5rem, 4.8vw, 4rem);
-  --text-display--line-height: 1.08;
-  --text-display--letter-spacing: -0.025em;
-  --text-display--font-weight: 600;
+  --text-h3: clamp(1.5rem, 2vw, 2rem);
+  --text-h3--line-height: var(--leading-heading);
+  --text-h3--letter-spacing: -0.015em;
+  --text-h3--font-weight: 500;
 
-  /* Medium Section Headings */
-  --text-section-md: clamp(2rem, 3.6vw, 2.75rem);
-  --text-section-md--line-height: 1.14;
-  --text-section-md--letter-spacing: -0.02em;
-  --text-section-md--font-weight: 600;
-
-  /* H1 */
-  --text-h1: clamp(1.75rem, 2.6vw, 2.25rem);
-  --text-h1--line-height: 1.2;
-  --text-h1--letter-spacing: -0.015em;
-  --text-h1--font-weight: 600;
-
-  /* H2 */
-  --text-h2: 1.5rem;
-  --text-h2--line-height: 1.25;
-  --text-h2--letter-spacing: -0.01em;
-  --text-h2--font-weight: 600;
-
-  /* H3 */
-  --text-h3: 1.25rem;
-  --text-h3--line-height: 1.35;
-  --text-h3--letter-spacing: -0.005em;
-  --text-h3--font-weight: 600;
-
-  /* Project / Service Titles */
-  --text-project-title: 1.0625rem;
-  --text-project-title--line-height: 1.45;
-  --text-project-title--letter-spacing: 0em;
-  --text-project-title--font-weight: 500;
-
-  /* Large Body */
   --text-body-lg: 1.125rem;
-  --text-body-lg--line-height: 1.6;
+  --text-body-lg--line-height: var(--leading-body);
   --text-body-lg--letter-spacing: 0em;
   --text-body-lg--font-weight: 400;
 
-  /* Normal Body */
   --text-body: 1rem;
-  --text-body--line-height: 1.65;
+  --text-body--line-height: var(--leading-body);
   --text-body--letter-spacing: 0em;
   --text-body--font-weight: 400;
 
-  /* Small Body */
-  --text-body-sm: 0.875rem;
-  --text-body-sm--line-height: 1.6;
-  --text-body-sm--letter-spacing: 0em;
-  --text-body-sm--font-weight: 400;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.5;
+  --text-small--letter-spacing: 0.01em;
+  --text-small--font-weight: 400;
 
-  /* Buttons (sentence case, not uppercase) */
-  --text-button: 0.875rem;
-  --text-button--line-height: 1;
-  --text-button--letter-spacing: -0.005em;
-  --text-button--font-weight: 500;
-
-  /* Caption */
-  --text-caption: 0.8125rem;
-  --text-caption--line-height: 1.45;
-  --text-caption--letter-spacing: 0em;
-  --text-caption--font-weight: 400;
-
-  /* Eyebrow / Small Labels -- uppercase, Geist Mono (paired
-     with `uppercase font-mono` at each usage; text-transform
-     and font-family aren't part of the bundled token). */
-  --text-label: 0.75rem;
+  /* Eyebrows / labels -- always uppercase (see .type-eyebrow). */
+  --text-label: 0.6875rem;
   --text-label--line-height: 1.2;
-  --text-label--letter-spacing: 0.08em;
+  --text-label--letter-spacing: 0.14em;
   --text-label--font-weight: 500;
 
   /* =======================================================
-     SECTION RHYTHM
+     SECTION RHYTHM -- `py-section`, `mt-section`, ...
      ======================================================= */
 
-  --spacing-section: 8rem;
-  --spacing-section-sm: 4.5rem;
+  --spacing-section: var(--space-section);
 }
 
 /* =========================================================
-   INLINE THEME
+   INLINE THEME (values resolved from runtime variables)
    ========================================================= */
 
 @theme inline {
-  /* =======================================================
-     TYPOGRAPHY
-     ======================================================= */
+  --font-display: var(--font-satoshi), system-ui, sans-serif;
+  --font-body: var(--font-manrope), system-ui, sans-serif;
+  --font-sans: var(--font-body);
 
-  --font-sans: var(--font-geist-sans), Inter, system-ui, sans-serif;
-  --font-heading: var(--font-geist-sans), Inter, system-ui, sans-serif;
-  --font-body: var(--font-geist-sans), Inter, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-
-  /* =======================================================
-     GLOBAL PALETTE UTILITIES
-     e.g. bg-bg-main, text-text-secondary, bg-brand-primary,
-     border-border-subtle, shadow-card
-     ======================================================= */
-
-  --color-bg-main: var(--bg-main);
-  --color-bg-surface: var(--bg-surface);
-  --color-bg-alt: var(--bg-alt);
-  --color-bg-contrast-dark: var(--bg-contrast-dark);
-
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-muted: var(--text-muted);
-  --color-text-inverted: var(--text-inverted);
-
-  --color-brand-primary: var(--brand-primary);
-  --color-brand-primary-hover: var(--brand-primary-hover);
-  --color-brand-secondary: var(--brand-secondary);
-  --color-brand-secondary-hover: var(--brand-secondary-hover);
-  --color-brand-amber: var(--brand-amber);
-  --color-brand-amber-soft: var(--brand-amber-soft);
-
-  --color-border-subtle: var(--border-subtle);
-
-  --shadow-card: var(--shadow-card);
-
-  /* =======================================================
-     SHADCN COLOR MAPPING
-     ======================================================= */
-
-  --color-background: var(--background);
+  /* shadcn primitives (components/ui) */
   --color-foreground: var(--foreground);
-
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
-
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-
   --color-destructive: var(--destructive);
-
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-
-  /* =======================================================
-     CHARTS
-     ======================================================= */
-
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-
-  /* =======================================================
-     SIDEBAR
-     ======================================================= */
-
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-
-  /* =======================================================
-     RADIUS
-     ======================================================= */
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -239,88 +126,46 @@
 }
 
 /* =========================================================
-   THEME TOKENS
+   RUNTIME TOKENS
    ========================================================= */
 
 :root {
-  /* =======================================================
-     GLOBAL PALETTE
-     ======================================================= */
+  /* Spacing scale -- use via `p-(--space-xl)`, `gap-(--space-lg)`, ... */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+  --space-section: clamp(5rem, 10vw, 10rem);
 
-  /* Layout Backgrounds */
-  --bg-main: #F6F7F4;
-  --bg-surface: #FFFFFF;
-  --bg-alt: #ECEFE9;
-  --bg-contrast-dark: #1C241B;
+  /* Layout -- every Container shares this grid */
+  --container-max: 1440px;
+  --space-gutter: clamp(1rem, 4vw, 3rem);
+  --header-height: 5rem;
 
-  /* Typography */
-  --text-primary: #161C14;
-  --text-secondary: #4B5547;
-  --text-muted: #6B7766;
-  --text-inverted: #F6F7F4;
-
-  /* Accents & Brand Actions */
-  --brand-primary: #97A87A;
-  --brand-primary-hover: #86986A;
-  --brand-secondary: #4F5B2A;
-  --brand-secondary-hover: #414B22;
-  --brand-amber: #D48B38;
-  --brand-amber-soft: #FCEFD9;
-
-  /* Structural Borders & Shadows */
-  --border-subtle: #DDE3D8;
-  --shadow-card: 0 6px 24px -4px rgba(22, 28, 20, 0.05);
-
-  /* =======================================================
-     SHADCN TOKENS (derived from the palette above)
-     ======================================================= */
-
-  --background: var(--bg-main);
-  --foreground: var(--text-primary);
-
-  --card: var(--bg-surface);
-  --card-foreground: var(--text-primary);
-
-  --popover: var(--bg-surface);
-  --popover-foreground: var(--text-primary);
-
-  --primary: var(--brand-primary);
-  --primary-foreground: var(--text-primary);
-
-  --secondary: var(--brand-secondary);
-  --secondary-foreground: var(--text-inverted);
-
-  --muted: var(--bg-alt);
-  --muted-foreground: var(--text-muted);
-
-  --accent: var(--brand-amber-soft);
-  --accent-foreground: var(--text-primary);
-
-  --destructive: oklch(0.577 0.245 27.325);
-
-  --border: var(--border-subtle);
-  --input: var(--border-subtle);
-  --ring: var(--brand-secondary);
-
-  --chart-1: var(--brand-primary);
-  --chart-2: var(--brand-secondary);
-  --chart-3: var(--brand-amber);
-  --chart-4: var(--text-muted);
-  --chart-5: var(--border-subtle);
-
+  /* shadcn tokens, derived from the palette */
+  --background: var(--color-background);
+  --foreground: var(--color-text-primary);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text-primary);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-text-primary);
+  --primary: var(--color-text-primary);
+  --primary-foreground: var(--color-background);
+  --secondary: var(--color-surface);
+  --secondary-foreground: var(--color-text-primary);
+  --muted: var(--color-surface);
+  --muted-foreground: var(--color-text-muted);
+  --accent: var(--color-surface);
+  --accent-foreground: var(--color-text-primary);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: var(--color-border-subtle);
+  --input: var(--color-border-subtle);
+  --ring: var(--color-text-secondary);
   --radius: 0.5rem;
-
-  --sidebar: var(--bg-surface);
-  --sidebar-foreground: var(--text-primary);
-
-  --sidebar-primary: var(--brand-primary);
-  --sidebar-primary-foreground: var(--text-primary);
-
-  --sidebar-accent: var(--bg-alt);
-  --sidebar-accent-foreground: var(--text-primary);
-
-  --sidebar-border: var(--border-subtle);
-  --sidebar-ring: var(--brand-secondary);
 }
 
 /* =========================================================
@@ -333,103 +178,80 @@
   }
 
   html {
-    background: var(--bg-main);
-    color-scheme: light;
+    background: var(--color-background);
+    color-scheme: dark;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-ah-bg text-ah-ink font-body antialiased;
-
-    background-color: var(--bg-main);
-    color: var(--text-primary);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-
-  /* =======================================================
-     HEADINGS
-     ======================================================= */
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-heading;
+    font-family: var(--font-display);
+    line-height: var(--leading-heading);
+    text-wrap: balance;
   }
 
-  /* =======================================================
-     SELECTION
-     ======================================================= */
+  p {
+    text-wrap: pretty;
+  }
 
   ::selection {
-    background: var(--brand-amber-soft);
-    color: var(--text-primary);
+    background: var(--color-text-primary);
+    color: var(--color-background);
   }
-
-  /* =======================================================
-     SCROLLBAR
-     ======================================================= */
 
   ::-webkit-scrollbar {
     width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--bg-alt);
+    background: var(--color-background);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--text-muted);
+    background: var(--color-surface);
     border-radius: 999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--brand-secondary);
+    background: var(--color-text-muted);
   }
-
-  /* =======================================================
-     CUSTOM CURSOR
-     ======================================================= */
 
   html.cursor-custom-active,
   html.cursor-custom-active * {
     cursor: none;
   }
-}
 
-/* =========================================================
-   TYPOGRAPHY COMPONENTS
-   ========================================================= */
-
-@layer components {
-  /* Eyebrow / Small Labels tier: text-label carries the size,
-     line-height, letter-spacing, and weight; this class adds
-     the two things the token can't bundle (transform, family)
-     so every eyebrow site-wide is set with one class. */
-  .type-eyebrow {
-    @apply text-label font-mono uppercase;
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
 /* =========================================================
-   TRANSPARENT NAVBAR SUPPORT
+   COMPONENT UTILITIES
    ========================================================= */
 
-/*
-  Navbar should sit directly over the hero.
-
-  Use on Navbar:
-  <nav className="absolute inset-x-0 top-0 z-50 w-full bg-transparent">
-*/
-
-.navbar-transparent {
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+@layer components {
+  /* Eyebrow / small label: one class sets every label site-wide. */
+  .type-eyebrow {
+    @apply text-label font-body uppercase;
+  }
 }
 
 /* =========================================================
-   MARQUEE
+   KEYFRAMES
    ========================================================= */
 
 @keyframes marquee {
@@ -442,45 +264,27 @@
   }
 }
 
-/* =========================================================
-   OPTIONAL UTILITY ANIMATIONS
-   ========================================================= */
-
-@keyframes ah-pulse {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scale(1);
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
 
-  50% {
+  to {
     opacity: 1;
-    transform: scale(1.05);
+    transform: translateY(0);
   }
 }
 
-@keyframes ah-glow {
-  0%,
-  100% {
-    opacity: 0.35;
+/* Services hero autoplay timer */
+@keyframes hero-progress {
+  from {
+    transform: scaleX(0);
   }
 
-  50% {
-    opacity: 0.7;
+  to {
+    transform: scaleX(1);
   }
-}
-
-/* =========================================================
-   SMOOTH INTERACTION
-   ========================================================= */
-
-html {
-  scroll-behavior: smooth;
-}
-
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
 }
 
 /* =========================================================

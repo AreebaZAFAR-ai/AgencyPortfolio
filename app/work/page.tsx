@@ -17,18 +17,25 @@ export default function WorkPage() {
 
   return (
     <>
-      <WordHero title="WORK" />
+      <WordHero
+        title="WORK"
+        image={{
+          src: "/assets/images/work/hero/work-hero.jpg",
+          alt: "Minimal designer desk with a monitor, plant and yellow mug",
+          titleAlign: "center",
+        }}
+      />
 
       <TrustCounters />
 
-      <section className="py-20 md:py-32">
+      <section className="py-section">
         <Container size="wide">
-          <div className="mb-14 flex flex-col items-center gap-6 text-center md:mb-20">
+          <div className="mb-(--space-3xl) flex flex-col items-center gap-(--space-lg) text-center md:mb-(--space-3xl)">
             <SectionTitle
               eyebrow={`${sorted.length} Selected Projects`}
               title="Every site, live and shipped"
               description="Hover a project to watch it scroll top to bottom, right inside the card. Click through for a live, interactive preview."
-              size="display"
+              size="h2"
               align="center"
             />
           </div>

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { XIcon } from "lucide-react";
 import { navItems } from "@/data/nav";
 import { Button } from "@/components/common/Button";
+import { cn } from "@/lib/utils";
 
 interface MobileNavProps {
   open: boolean;
@@ -17,69 +18,22 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
   if (!open) return null;
 
   return (
-    <div
-      className="
-        fixed
-        inset-0
-        z-[9999]
-        flex
-        min-h-[100dvh]
-        w-full
-        flex-col
-        overflow-hidden
-        bg-bg-contrast-dark
-        opacity-100
-        md:hidden
-      "
-      style={{
-        backgroundColor: "var(--bg-contrast-dark)",
-        opacity: 1,
-      }}
-    >
-      {/* Top bar */}
-      <div
-        className="
-          flex
-          shrink-0
-          items-center
-          justify-between
-          border-b
-          border-white/10
-          bg-bg-contrast-dark
-          px-6
-          py-5
-        "
-      >
-        <span className="font-heading text-h3 text-white">
-          AH Growth
-        </span>
+    <div className="fixed inset-0 z-[9999] flex min-h-dvh w-full flex-col overflow-hidden bg-background lg:hidden">
+      {/* Top bar -- mirrors the Header so the logo and close button don't jump */}
+      <div className="flex h-(--header-height) shrink-0 items-center justify-between border-b border-border-subtle px-(--space-gutter)">
+        <span className="font-display text-h3 font-bold text-text-primary">AH Growth</span>
 
         <button
           type="button"
           onClick={onClose}
           aria-label="Close menu"
-          className="
-            flex
-            h-10
-            w-10
-            items-center
-            justify-center
-            rounded-full
-            border
-            border-white/20
-            bg-white/5
-            text-white
-            transition-all
-            hover:border-white/40
-            hover:bg-white/10
-          "
+          className="flex size-10 items-center justify-center rounded-full border border-border-subtle text-text-primary transition-colors hover:border-text-primary"
         >
-          <XIcon className="h-5 w-5" />
+          <XIcon className="size-5" />
         </button>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex flex-1 flex-col justify-center gap-2 bg-bg-contrast-dark px-6">
+      <nav className="flex flex-1 flex-col justify-center gap-(--space-xs) px-(--space-gutter)">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
 
@@ -88,18 +42,10 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
               key={item.href}
               href={item.href}
               onClick={onClose}
-              className={`
-                py-3
-                font-heading
-                text-h1
-                transition-all
-                duration-300
-                ${
-                  isActive
-                    ? "translate-x-1 text-white"
-                    : "text-white/55 hover:translate-x-1 hover:text-white"
-                }
-              `}
+              className={cn(
+                "py-(--space-xs) font-display text-h2 transition-colors duration-300",
+                isActive ? "text-text-primary" : "text-text-muted hover:text-text-primary"
+              )}
             >
               {item.label}
             </Link>
@@ -107,19 +53,8 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
         })}
       </nav>
 
-      {/* CTA */}
-      <div className="shrink-0 bg-bg-contrast-dark px-6 pb-10">
-        <Button
-          href="/contact"
-          size="lg"
-          className="
-            w-full
-            border
-            border-white/10
-            shadow-lg
-          "
-          onClick={onClose}
-        >
+      <div className="shrink-0 px-(--space-gutter) pb-(--space-2xl)">
+        <Button href="/contact" size="lg" className="w-full" onClick={onClose}>
           Start a Project
         </Button>
       </div>

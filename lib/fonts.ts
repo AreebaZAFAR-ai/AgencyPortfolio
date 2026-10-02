@@ -1,17 +1,22 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Manrope } from "next/font/google";
 
-export const geistSans = Geist({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-geist-sans",
+// Display -- hero, headings, large numbers. Self-hosted variable font (Fontshare).
+export const satoshi = localFont({
+  src: [
+    { path: "../app/fonts/Satoshi-Variable.woff2", weight: "300 900", style: "normal" },
+    { path: "../app/fonts/Satoshi-VariableItalic.woff2", weight: "300 900", style: "italic" },
+  ],
+  variable: "--font-satoshi",
   display: "swap",
-  fallback: ["Inter", "system-ui", "sans-serif"],
+  fallback: ["system-ui", "sans-serif"],
 });
 
-export const geistMono = Geist_Mono({
+// Body -- paragraphs, navigation, buttons, forms, labels, metadata.
+export const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["500"],
-  variable: "--font-geist-mono",
+  weight: ["400", "500", "600"],
+  variable: "--font-manrope",
   display: "swap",
-  fallback: ["ui-monospace", "monospace"],
+  fallback: ["system-ui", "sans-serif"],
 });

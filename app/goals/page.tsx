@@ -24,18 +24,18 @@ export default function GoalsPage() {
       {goalItems.map((goal, index) => (
         <GoalBlock key={goal.eyebrow} goal={goal} reversed={index % 2 === 1} />
       ))}
-      <section className="border-t border-ah-muted/10 py-section-sm md:py-section">
+      <section className="border-t border-border-subtle py-section">
         <Container>
-          <SectionTitle eyebrow="Future Roadmap" title="What's next." size="display" className="mb-10" />
+          <SectionTitle eyebrow="Future Roadmap" title="What's next." size="h2" className="mb-(--space-2xl)" />
           <ol className="flex flex-col">
             {roadmapMilestones.map((milestone, index) => (
               <ScrollReveal
                 key={milestone}
                 as="li"
                 delay={index * 0.05}
-                className="flex gap-6 border-t border-ah-muted/10 py-5 text-body text-ah-ink/85"
+                className="flex gap-(--space-lg) border-t border-border-subtle py-(--space-lg) text-body text-text-primary"
               >
-                <span className="font-heading text-h3 text-ah-muted">{String(index + 1).padStart(2, "0")}</span>
+                <span className="font-display text-h3 text-text-secondary">{String(index + 1).padStart(2, "0")}</span>
                 {milestone}
               </ScrollReveal>
             ))}

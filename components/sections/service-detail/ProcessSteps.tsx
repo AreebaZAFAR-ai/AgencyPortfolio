@@ -16,12 +16,12 @@ export function ProcessSteps({
   title = "How we work.",
 }: ProcessStepsProps) {
   return (
-    <section className="border-t border-ah-muted/10 bg-ah-surface py-section-sm md:py-section">
+    <section className="border-t border-border-subtle bg-surface py-section">
       <Container>
         <SectionTitle
           eyebrow={eyebrow}
           title={title}
-          size="h1"
+          size="h3"
           className="mb-12"
         />
 
@@ -31,17 +31,17 @@ export function ProcessSteps({
               key={step.step}
               as="div"
               delay={index * 0.06}
-              className="flex flex-col gap-3 border-t border-ah-muted/20 pt-6"
+              className="flex flex-col gap-3 border-t border-border-subtle pt-6"
             >
-              <span className="font-heading text-h2 text-ah-muted">
+              <span className="font-display text-h3 text-text-secondary">
                 {step.step}
               </span>
 
-              <h3 className="font-heading text-project-title text-ah-ink">
+              <h3 className="font-display text-body-lg text-text-primary">
                 {step.title}
               </h3>
 
-              <p className="text-body-sm text-ah-muted">
+              <p className="text-small text-text-secondary">
                 {step.description}
               </p>
             </ScrollReveal>

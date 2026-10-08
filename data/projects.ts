@@ -197,6 +197,62 @@ export const projects: Project[] = [
     ],
     visualTheme: "growth",
   },
+  {
+    slug: "pearls",
+    order: 7,
+    client: "Pearls",
+    name: "PEARLS",
+    image: "/assets/images/projects/pearlsfull.jpg",
+    liveUrl: "https://pearls-jewelry-website.vercel.app/",
+    summary: "A refined online boutique for a fine jewelry label built around timeless pieces.",
+    clientBlurb:
+      "Pearls is a fine jewelry label crafting earrings, rings, necklaces and bracelets designed to be worn every day, not saved for special occasions.",
+    challenge:
+      "Fine jewelry is bought on detail and feeling. The brand needed a store that let each piece breathe while still making it quick to browse a growing catalogue and add to cart.",
+    solution:
+      "We designed a dark, gallery-like storefront with signature collection tiles, a filterable product grid with quick add, mood-based shopping edits, client testimonials and a newsletter for new releases.",
+    designProcess: [
+      "Defined a dark, editorial visual language that lets each piece shine",
+      "Designed signature collection tiles for earrings, rings, necklaces and bracelets",
+      "Built a filterable product grid with quick add and load more",
+      "Added mood-based edits, testimonials and a newsletter sign-up",
+    ],
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
+    results: [
+      { label: "Scope", value: "Design + Build" },
+      { label: "Experience", value: "Fully responsive" },
+      { label: "Status", value: "Live" },
+    ],
+    visualTheme: "brand",
+  },
+  {
+    slug: "trueline",
+    order: 8,
+    client: "TrueLine Plumbing",
+    name: "TRUELINE",
+    image: "/assets/images/projects/truelinefull.jpg",
+    liveUrl: "https://true-line-plumbing-service-website.vercel.app/",
+    summary: "A conversion-focused website for a local plumbing company with 24/7 emergency service.",
+    clientBlurb:
+      "TrueLine Plumbing is a local plumbing company handling leak repair, drain cleaning, water heaters, repiping, sewer lines and round-the-clock emergency calls.",
+    challenge:
+      "When a pipe bursts, customers need to trust a plumber and reach them fast. The business needed a site that built confidence quickly and turned visitors into calls and quote requests.",
+    solution:
+      "We built a bold, trust-first site with a clear service directory, a 24/7 emergency call-to-action, a simple four-step process, recent project work, reviews, service areas and an FAQ.",
+    designProcess: [
+      "Organised eight core services into a clear, scannable directory",
+      "Placed click-to-call and free quote actions at every key point",
+      "Designed a four-step process and transparent pricing messaging",
+      "Added project gallery, reviews, service areas and an FAQ",
+    ],
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
+    results: [
+      { label: "Scope", value: "Design + Build" },
+      { label: "Experience", value: "Fully responsive" },
+      { label: "Status", value: "Live" },
+    ],
+    visualTheme: "growth",
+  },
 ];
 
 export function getProjectBySlug(slug: string) {

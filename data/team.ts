@@ -2,9 +2,9 @@ import type { TeamMember } from "./types";
 
 export const leadership: TeamMember[] = [
   {
-    name: "Hassan",
+    name: "Syed Hassan Murtaza",
     role: "Founder & CEO",
-    initials: "H",
+    initials: "HM",
     skills: ["Product Strategy", "Engineering", "Growth"],
     bio: "Hassan founded AH Growth to close the gap between agencies that design well and agencies that build well, and leads product strategy and technical direction on every engagement.",
     quote: "Building meaningful digital products isn't only about technology. It's about understanding people, solving real problems, and creating work that lasts.",
@@ -17,9 +17,9 @@ export const leadership: TeamMember[] = [
     bio: "Keeps every engagement on schedule and every client in the loop, from kickoff to launch.",
   },
   {
-    name: "Nameer",
+    name: "Nameer Naeem",
     role: "Management",
-    initials: "N",
+    initials: "NN",
     skills: ["Planning", "Operations", "Client Success"],
     bio: "Turns plans into momentum, coordinating teams so projects move smoothly and ship on time.",
   },

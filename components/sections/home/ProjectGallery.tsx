@@ -5,7 +5,7 @@ import { Container } from "@/components/common/Container";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import { WorkShowcase } from "@/components/sections/work/WorkShowcase";
 
-const SLUGS = ["modisch", "fitlat", "solarlink", "cakespot", "noctra", "orelle", "aesthetic-clinic"];
+const SLUGS = ["modisch", "fitlat", "solarlink", "cakespot", "noctra", "orelle", "aesthetic-clinic", "pearls", "trueline"];
 
 export function ProjectGallery() {
   const cards = SLUGS.map((slug) => projects.find((p) => p.slug === slug)).filter(

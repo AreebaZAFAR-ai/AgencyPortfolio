@@ -1,7 +1,11 @@
 
 "use client";
 
-import { useState, type ReactNode } from "react";
+import {
+  useState,
+  type BaseSyntheticEvent,
+  type ReactNode,
+} from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -22,16 +26,28 @@ const budgetOptions = [
 const OTHER_SERVICE = "Other services";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Enter your full name."),
-  email: z.email("Enter a valid email address."),
-  company: z.string().optional(),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Enter your full name.")
+    .max(100, "Name is too long."),
+  email: z
+    .string()
+    .trim()
+    .pipe(z.email("Enter a valid email address.")),
+  company: z
+    .string()
+    .max(150, "Company name is too long.")
+    .optional(),
   services: z
     .array(z.string())
     .min(1, "Pick at least one service."),
   budget: z.string().optional(),
   message: z
     .string()
-    .min(10, "Tell us a little more about the project."),
+    .trim()
+    .min(10, "Tell us a little more about the project.")
+    .max(5000, "Please keep your message under 5000 characters."),
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
@@ -139,6 +155,7 @@ function Chip({
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
@@ -154,15 +171,33 @@ export function ContactForm() {
     },
   });
 
-  const onSubmit = async (values: ContactFormValues) => {
-    await new Promise((resolve) =>
-      setTimeout(resolve, 500)
-    );
+  const onSubmit = async (
+    values: ContactFormValues,
+    event?: BaseSyntheticEvent
+  ) => {
+    setSubmitError(null);
 
-    console.log("Contact form submission", values);
+    const form = event?.target as HTMLFormElement | undefined;
+    const website =
+      (form?.elements.namedItem("website") as HTMLInputElement | null)
+        ?.value ?? "";
 
-    setSubmitted(true);
-    reset();
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, website }),
+      });
+
+      if (!response.ok) throw new Error();
+
+      setSubmitted(true);
+      reset();
+    } catch {
+      setSubmitError(
+        "Something went wrong while sending your message. Please try again."
+      );
+    }
   };
 
   if (submitted) {
@@ -213,6 +248,28 @@ export function ContactForm() {
             noValidate
             className="mx-auto w-full"
           >
+
+            {/* HONEYPOT — invisible to people, catches bots */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                left: "-10000px",
+                width: 1,
+                height: 1,
+                overflow: "hidden",
+              }}
+            >
+              <label htmlFor="website">Website</label>
+              <input
+                id="website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                defaultValue=""
+              />
+            </div>
 
             {/* NAME */}
             <div className="mb-(--space-xl)">
@@ -391,6 +448,15 @@ export function ContactForm() {
                 />
               </Field>
             </div>
+
+            {submitError && (
+              <p
+                role="alert"
+                className="mb-(--space-md) text-small text-destructive"
+              >
+                {submitError}
+              </p>
+            )}
 
             {/* SUBMIT */}
             <div className="flex flex-col items-center justify-between gap-(--space-lg) border-t border-border-subtle pt-(--space-xl) sm:flex-row">

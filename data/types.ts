@@ -144,7 +144,7 @@ export interface HeroVideo {
   src: string;
   // Smaller 720p version served to phones.
   mobileSrc?: string;
-  poster: string;
+  poster?: string;
 }
 
 export interface HeroContent {

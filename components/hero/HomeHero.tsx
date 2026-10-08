@@ -65,7 +65,6 @@ export function HomeHero({ content, video }: HomeHeroProps) {
         playsInline
         loop
         preload="auto"
-        poster={video.poster}
         aria-hidden="true"
       >
         {video.mobileSrc && (

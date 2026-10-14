@@ -3,14 +3,16 @@
 
 import { useRef } from "react";
 import {
-  motion,
+  LazyMotion,
+  domAnimation,
+  m as motion,
   useReducedMotion,
   useScroll,
   useTransform,
 } from "framer-motion";
 import { Container } from "@/components/common/Container";
 import { Button } from "@/components/common/Button";
-import { MagneticButton } from "@/components/animations";
+import { MagneticButton } from "@/components/animations/MagneticButton";
 import type { HeroContent, HeroVideo } from "@/data/types";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -43,6 +45,7 @@ export function HomeHero({ content, video }: HomeHeroProps) {
   );
 
   return (
+    <LazyMotion features={domAnimation}>
     <section
       ref={sectionRef}
       className="relative z-0 min-h-screen w-full overflow-hidden"
@@ -249,5 +252,6 @@ export function HomeHero({ content, video }: HomeHeroProps) {
         <span className="type-eyebrow text-text-muted">Software &amp; digital agency</span>
       </Container>
     </section>
+    </LazyMotion>
   );
 }

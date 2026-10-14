@@ -2,7 +2,8 @@ import Image from "next/image";
 import { companyTimeline } from "@/data/team";
 import { Container } from "@/components/common/Container";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import { ScrollReveal, ImageReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { ImageReveal } from "@/components/animations/ImageReveal";
 
 const storyImages = [
   "/assets/images/about/about1.jpg",

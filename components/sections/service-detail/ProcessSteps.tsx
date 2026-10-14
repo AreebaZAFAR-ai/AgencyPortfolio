@@ -1,7 +1,7 @@
 
 import { Container } from "@/components/common/Container";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import type { ProcessStep } from "@/data/types";
 
 interface ProcessStepsProps {

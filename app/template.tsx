@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { PageTransition } from "@/components/animations";
+import { PageTransition } from "@/components/animations/PageTransition";
 
 export default function Template({ children }: { children: ReactNode }) {
   return <PageTransition>{children}</PageTransition>;

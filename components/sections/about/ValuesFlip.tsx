@@ -5,7 +5,7 @@ import { gsap } from "@/lib/gsap";
 import { cultureValues } from "@/data/team";
 import { Container } from "@/components/common/Container";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { cn } from "@/lib/utils";
 
 // Relative timeline units -- not pixels. Scrub maps scroll

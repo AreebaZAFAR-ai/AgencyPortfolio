@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import { ImageIcon, PlayIcon, UserIcon } from "lucide-react";
-import { ImageReveal } from "@/components/animations";
+import { ImageReveal } from "@/components/animations/ImageReveal";
 import { cn } from "@/lib/utils";
 
 const aspectClasses = {

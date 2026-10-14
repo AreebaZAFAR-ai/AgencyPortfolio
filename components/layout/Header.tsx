@@ -7,7 +7,7 @@ import { MenuIcon } from "lucide-react";
 import { navItems } from "@/data/nav";
 import { Container } from "@/components/common/Container";
 import { Button } from "@/components/common/Button";
-import { MagneticButton } from "@/components/animations";
+import { MagneticButton } from "@/components/animations/MagneticButton";
 import { MobileNav } from "./MobileNav";
 import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion-prefs";

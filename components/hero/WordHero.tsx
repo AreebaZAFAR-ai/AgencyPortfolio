@@ -1,9 +1,8 @@
-"use client";
 
 import Image from "next/image";
 import { PixelImage } from "@/components/ui/pixel-image";
 import { VideoText } from "@/components/ui/video-text";
-import { Parallax } from "@/components/animations";
+import { Parallax } from "@/components/animations/Parallax";
 import { cn } from "@/lib/utils";
 
 interface WordHeroProps {

@@ -3,7 +3,9 @@ import { leadership } from "@/data/team";
 import { trustStats } from "@/data/trust-stats";
 import { Container } from "@/components/common/Container";
 import { Button } from "@/components/common/Button";
-import { ImageReveal, Parallax, StaggerReveal } from "@/components/animations";
+import { ImageReveal } from "@/components/animations/ImageReveal";
+import { Parallax } from "@/components/animations/Parallax";
+import { StaggerReveal } from "@/components/animations/StaggerReveal";
 import { cn } from "@/lib/utils";
 import { AboutCounter } from "./AboutCounter";
 

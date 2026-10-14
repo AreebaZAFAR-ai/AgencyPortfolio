@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { manrope, satoshi } from "@/lib/fonts";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { CustomCursor } from "@/components/animations";
+import { CustomCursor } from "@/components/animations/CustomCursor";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import "./globals.css";
 

@@ -1,6 +1,6 @@
 import { Container } from "@/components/common/Container";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 
 interface FeatureGridProps {
   features: { title: string; description: string }[];

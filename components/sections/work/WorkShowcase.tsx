@@ -12,12 +12,14 @@ import {
 
 import {
   AnimatePresence,
-  motion,
+  LazyMotion,
+  domAnimation,
+  m as motion,
   useInView,
   useReducedMotion,
 } from "framer-motion";
 
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion-prefs";
 import { Button } from "@/components/common/Button";
@@ -490,7 +492,7 @@ export function WorkShowcase({
   });
 
   return (
-    <>
+    <LazyMotion features={domAnimation}>
       {/* Work cards */}
       {useFlip ? (
         <div
@@ -785,6 +787,6 @@ export function WorkShowcase({
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </LazyMotion>
   );
 }

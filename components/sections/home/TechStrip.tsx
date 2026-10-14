@@ -1,6 +1,6 @@
 import { technologies } from "@/data/technologies";
 import { Container } from "@/components/common/Container";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 
 export function TechStrip() {
   return (

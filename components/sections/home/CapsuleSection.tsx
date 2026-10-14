@@ -1,5 +1,5 @@
 import { ArrowUpRightIcon } from "lucide-react";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { Button } from "@/components/common/Button";
 import { LazyVideo } from "@/components/common/LazyVideo";
 

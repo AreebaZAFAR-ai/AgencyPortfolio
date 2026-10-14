@@ -8,12 +8,12 @@ import {
 } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import * as z from "zod";
 import { ArrowUpRightIcon, CheckIcon } from "lucide-react";
 
-import { services } from "@/data/services";
+import type { Service } from "@/data/types";
 import { Button } from "@/components/common/Button";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { cn } from "@/lib/utils";
 
 const budgetOptions = [
@@ -153,7 +153,14 @@ function Chip({
   );
 }
 
-export function ContactForm() {
+export type ContactServiceOption = Pick<Service, "slug" | "name">;
+
+interface ContactFormProps {
+  // Passed in from the server page so the full services dataset isn't bundled here.
+  services: ContactServiceOption[];
+}
+
+export function ContactForm({ services }: ContactFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 

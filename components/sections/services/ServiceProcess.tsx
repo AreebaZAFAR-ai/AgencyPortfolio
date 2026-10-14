@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { Container } from "@/components/common/Container";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { gsap } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import type { ServiceProcessStepDetail } from "@/data/types";

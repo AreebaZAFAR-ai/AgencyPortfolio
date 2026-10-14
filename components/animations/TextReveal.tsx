@@ -2,7 +2,8 @@
 "use client";
 
 import { useEffect, useRef, type ElementType, type ReactNode } from "react";
-import { gsap, SplitText } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
+import { SplitText } from "@/lib/gsap-split-text";
 import { prefersReducedMotion } from "@/lib/motion-prefs";
 
 interface TextRevealProps {

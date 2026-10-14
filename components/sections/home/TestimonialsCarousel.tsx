@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, LazyMotion, domAnimation, m as motion, useReducedMotion } from "framer-motion";
 import { StarIcon } from "lucide-react";
 import { testimonials } from "@/data/testimonials";
 import { cn } from "@/lib/utils";
@@ -42,6 +42,7 @@ export function TestimonialsCarousel() {
           ))}
         </div>
 
+        <LazyMotion features={domAnimation}>
         <AnimatePresence mode="wait" initial={false}>
           <motion.figure
             key={active}
@@ -63,6 +64,7 @@ export function TestimonialsCarousel() {
             </figcaption>
           </motion.figure>
         </AnimatePresence>
+        </LazyMotion>
 
         <div role="tablist" aria-label="Choose a testimonial" className="mt-(--space-2xl) flex flex-wrap justify-center gap-(--space-sm)">
           {testimonials.map((item, i) => {

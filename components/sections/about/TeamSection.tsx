@@ -1,6 +1,6 @@
 import { leadership, teamMembers } from "@/data/team";
 import { Container } from "@/components/common/Container";
-import { StaggerReveal } from "@/components/animations";
+import { StaggerReveal } from "@/components/animations/StaggerReveal";
 import { TeamMarquee } from "./TeamMarquee";
 
 export function TeamSection() {

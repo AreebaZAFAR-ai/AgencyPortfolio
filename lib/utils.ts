@@ -1,12 +1,7 @@
-import { createCn } from "cn/config";
+import { createCn } from "cn/engine";
+import tables from "./cn-tables";
 
-// Teach the class merger the custom type scale from globals.css; otherwise
-// `text-h2` and `text-text-primary` read as two colours and one is dropped.
-export const cn = createCn({
-  extend: {
-    classGroups: {
-      "font-size": [{ text: ["hero", "h1", "h2", "h3", "body-lg", "body", "small", "label"] }],
-      leading: [{ leading: ["display", "heading", "body"] }],
-    },
-  },
-});
+// Merge tables precompiled from lib/cn.config.mjs (the custom type scale), so the
+// browser gets the small runtime engine instead of the config compiler.
+// After editing lib/cn.config.mjs, regenerate with `npm run cn:build`.
+export const cn = createCn(tables);

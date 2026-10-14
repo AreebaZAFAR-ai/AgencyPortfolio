@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "cn:build": "cn build --full --config lib/cn.config.mjs -o lib/cn-tables.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

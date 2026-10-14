@@ -2,7 +2,8 @@ import { ArrowUpRightIcon } from "lucide-react";
 import { Container } from "./Container";
 import { SectionTitle } from "./SectionTitle";
 import { Button } from "./Button";
-import { ScrollReveal, MagneticButton } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { MagneticButton } from "@/components/animations/MagneticButton";
 
 interface CtaBannerProps {
   eyebrow?: string;

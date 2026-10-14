@@ -1,6 +1,6 @@
 import { Container } from "@/components/common/Container";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import type { GoalItem } from "@/data/types";
 import { cn } from "@/lib/utils";
 

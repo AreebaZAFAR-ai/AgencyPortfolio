@@ -7,11 +7,9 @@ import { ArrowUpRightIcon } from "lucide-react";
 
 import { Container } from "@/components/common/Container";
 import { Button } from "@/components/common/Button";
-import {
-  TextReveal,
-  Parallax,
-  MagneticButton,
-} from "@/components/animations";
+import { TextReveal } from "@/components/animations/TextReveal";
+import { Parallax } from "@/components/animations/Parallax";
+import { MagneticButton } from "@/components/animations/MagneticButton";
 import { PixelImage } from "@/components/ui/pixel-image";
 import { cn } from "@/lib/utils";
 import { heroVideo } from "@/data/hero";

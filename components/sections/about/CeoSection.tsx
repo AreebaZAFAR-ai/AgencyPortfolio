@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { leadership } from "@/data/team";
 import { Container } from "@/components/common/Container";
-import { ImageReveal, Parallax, StaggerReveal } from "@/components/animations";
+import { ImageReveal } from "@/components/animations/ImageReveal";
+import { Parallax } from "@/components/animations/Parallax";
+import { StaggerReveal } from "@/components/animations/StaggerReveal";
 
 export function CeoSection() {
   const ceo = leadership[0];

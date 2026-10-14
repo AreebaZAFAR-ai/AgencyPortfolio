@@ -1,7 +1,7 @@
 import { clientLogos } from "@/data/testimonials";
 import { Container } from "@/components/common/Container";
 import { PlaceholderMedia } from "@/components/common/PlaceholderMedia";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 
 export function ClientLogos() {
   return (

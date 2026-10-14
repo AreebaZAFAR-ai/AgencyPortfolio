@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRightIcon } from "lucide-react";
 import type { Project } from "@/data/types";
 import { Container } from "@/components/common/Container";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 
 interface NextProjectProps {
   project: Project;

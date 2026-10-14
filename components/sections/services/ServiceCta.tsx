@@ -2,7 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { Container } from "@/components/common/Container";
-import { ImageReveal, Parallax, StaggerReveal } from "@/components/animations";
+import { ImageReveal } from "@/components/animations/ImageReveal";
+import { Parallax } from "@/components/animations/Parallax";
+import { StaggerReveal } from "@/components/animations/StaggerReveal";
 import { cn } from "@/lib/utils";
 import { Eyebrow, serif } from "./detail-ui";
 

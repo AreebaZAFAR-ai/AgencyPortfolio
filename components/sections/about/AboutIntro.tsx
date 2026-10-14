@@ -2,7 +2,9 @@ import Image from "next/image";
 import { ArrowUpRightIcon } from "lucide-react";
 import { Container } from "@/components/common/Container";
 import { Button } from "@/components/common/Button";
-import { ImageReveal, Parallax, StaggerReveal } from "@/components/animations";
+import { ImageReveal } from "@/components/animations/ImageReveal";
+import { Parallax } from "@/components/animations/Parallax";
+import { StaggerReveal } from "@/components/animations/StaggerReveal";
 
 export function AboutIntro() {
   return (

@@ -5,7 +5,7 @@ import { GoalBlock } from "@/components/sections/goals/GoalBlock";
 import { Container } from "@/components/common/Container";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import { CtaBanner } from "@/components/common/CtaBanner";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Goals — AH Growth",

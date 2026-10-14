@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/common/Container";
 import { WordHero } from "@/components/hero/WordHero";
 import { ContactForm } from "@/components/sections/contact/ContactForm";
+import { services } from "@/data/services";
 
 export const metadata: Metadata = {
   title: "Contact — AH Growth",
@@ -25,7 +26,7 @@ export default function ContactPage() {
       <section className="py-section">
         <Container>
           <div className="mx-auto w-full max-w-5xl">
-            <ContactForm />
+            <ContactForm services={services.map(({ slug, name }) => ({ slug, name }))} />
           </div>
         </Container>
       </section>

@@ -10,7 +10,16 @@ export function ServicesEditorial() {
           {services.map((service, index) => (
             <ServiceRow
               key={service.slug}
-              service={service}
+              service={{
+                slug: service.slug,
+                index: service.index,
+                name: service.name,
+                shortDescription: service.shortDescription,
+                technologies: service.technologies,
+                image: service.image,
+                imageFit: service.imageFit,
+                visualTheme: service.visualTheme,
+              }}
               index={index}
             />
           ))}

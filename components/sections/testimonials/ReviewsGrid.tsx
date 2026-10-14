@@ -1,7 +1,7 @@
 import { QuoteIcon } from "lucide-react";
 import { testimonials } from "@/data/testimonials";
 import { Container } from "@/components/common/Container";
-import { ScrollReveal } from "@/components/animations";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 
 export function ReviewsGrid() {
   return (

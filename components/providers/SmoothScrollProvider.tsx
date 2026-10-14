@@ -26,11 +26,19 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
 
     lenis.on("scroll", ScrollTrigger.update);
 
+    // Lenis measures <html>, which is h-full and so never resizes -- after a
+    // client-side navigation it kept the previous page's height and stopped
+    // touch scrolling short of the end. <body> grows with the content, so
+    // re-measure whenever it changes size.
+    const bodyObserver = new ResizeObserver(() => lenis.resize());
+    bodyObserver.observe(document.body);
+
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      bodyObserver.disconnect();
       gsap.ticker.remove(raf);
       lenis.destroy();
       lenisRef.current = null;
@@ -40,6 +48,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   // Lenis keeps its own scroll position, which overrides Next's scroll-to-top
   // on navigation. Start every new page at the top (unless linking to an anchor).
   useEffect(() => {
+    lenisRef.current?.resize();
     if (window.location.hash) return;
     if (lenisRef.current) lenisRef.current.scrollTo(0, { immediate: true, force: true });
     else window.scrollTo(0, 0);
